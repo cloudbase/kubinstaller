@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import RaisedButton from 'material-ui/RaisedButton'
 
 const Wrapper = styled.div`
   color: blue;
@@ -21,7 +22,7 @@ export default class Home extends Component<Props> {
         {this.props.array.map(item => (
           <div key={item}>{item}</div>
         ))}
-        <button onClick={this.props.onAddClick}>Add async</button>
+        <RaisedButton onClick={this.props.onAddClick}>Add async</RaisedButton>
       </Wrapper>
     )
   }

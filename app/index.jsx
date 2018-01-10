@@ -3,16 +3,9 @@ import { render } from 'react-dom'
 import { Switch, Route, Router } from 'react-router'
 import { createHashHistory } from 'history'
 import { AppContainer } from 'react-hot-loader'
-import { injectGlobal } from 'styled-components'
 
 import App from './components/App'
 import HomePage from './components/pages/HomePage'
-
-injectGlobal`
-  body {
-    margin: 0;
-  }
-`
 
 let history = createHashHistory()
 const renderApp = () => {
