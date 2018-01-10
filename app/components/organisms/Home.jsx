@@ -7,14 +7,22 @@ const Wrapper = styled.div`
   color: blue;
 `
 
-type Props = {};
+type Props = {
+  array: Array,
+  onAddClick: () => void,
+};
 
 export default class Home extends Component<Props> {
   props: Props;
 
   render() {
     return (
-      <Wrapper>Home</Wrapper>
+      <Wrapper>
+        {this.props.array.map(item => (
+          <div key={item}>{item}</div>
+        ))}
+        <button onClick={this.props.onAddClick}>Add async</button>
+      </Wrapper>
     )
   }
 }
