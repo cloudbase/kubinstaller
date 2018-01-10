@@ -52,12 +52,7 @@ app.on('window-all-closed', () => {
   }
 })
 
-
-app.on('ready', async () => {
-  if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
-    await installExtensions()
-  }
-
+let createWindow = () => {
   mainWindow = new BrowserWindow({
     show: false,
     width: 1024,
@@ -82,4 +77,20 @@ app.on('ready', async () => {
 
   const menuBuilder = new MenuBuilder(mainWindow)
   menuBuilder.buildMenu()
+}
+
+app.on('ready', async () => {
+  if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
+    await installExtensions()
+  }
+
+  createWindow()
+})
+
+app.on('activate', () => {
+  // On OS X it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+  if (mainWindow === null) {
+    createWindow()
+  }
 })
