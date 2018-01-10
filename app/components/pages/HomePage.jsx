@@ -1,5 +1,5 @@
 import React from 'react'
-import connectToStores from 'alt-utils/lib/connectToStores'
+import connectToStores from '../../utils/connectToStores'
 
 import HomeStore from '../../stores/HomeStore'
 import Home from '../organisms/Home'
@@ -7,7 +7,7 @@ import HomeActions from '../../actions/HomeActions'
 
 type Props = {
   array: Array,
-};
+}
 
 class HomePage extends React.Component<Props> {
   static getStores() {
