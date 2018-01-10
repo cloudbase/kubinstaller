@@ -1,27 +1,36 @@
 import React from 'react'
 import { render } from 'react-dom'
+import { Switch, Route, Router } from 'react-router'
+import { createHashHistory } from 'history'
 import { AppContainer } from 'react-hot-loader'
-import Root from './containers/Root'
-import { configureStore, history } from './store/configureStore'
 import './app.global.css'
 
-const store = configureStore()
+import App from './components/App'
+import HomePage from './components/HomePage'
+import CounterPage from './components/CounterPage'
 
-render(
-  <AppContainer>
-    <Root store={store} history={history} />
-  </AppContainer>,
-  document.getElementById('root')
-)
+let history = createHashHistory()
+const renderApp = () => {
+  render(
+    <AppContainer>
+      <App>
+        <Router history={history}>
+          <Switch>
+            <Route path="/counter" component={CounterPage} />
+            <Route path="/" component={HomePage} />
+          </Switch>
+        </Router>
+      </App>
+    </AppContainer>,
+    document.getElementById('root')
+  )
+}
+
+renderApp()
 
 if (module.hot) {
-  module.hot.accept('./containers/Root', () => {
-    const NextRoot = require('./containers/Root') // eslint-disable-line global-require
-    render(
-      <AppContainer>
-        <NextRoot store={store} history={history} />
-      </AppContainer>,
-      document.getElementById('root')
-    )
+  module.hot.accept('./components/App', () => {
+    require('./components/App')
+    renderApp()
   })
 }

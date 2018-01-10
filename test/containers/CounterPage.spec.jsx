@@ -1,11 +1,8 @@
 import React from 'react'
 import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { Provider } from 'react-redux'
 import { createBrowserHistory } from 'history'
-import { ConnectedRouter } from 'react-router-redux'
-import CounterPage from '../../app/containers/CounterPage'
-import { configureStore } from '../../app/store/configureStore'
+import CounterPage from '../../app/components/CounterPage'
 
 Enzyme.configure({ adapter: new Adapter() })
 
