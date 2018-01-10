@@ -6,6 +6,6 @@ import counter from './counter';
 const rootReducer = combineReducers({
   counter,
   router,
-});
+})
 
-export default rootReducer;
+export default rootReducer

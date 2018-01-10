@@ -13,6 +13,6 @@ export default class App extends React.Component<Props> {
       <div>
         {this.props.children}
       </div>
-    );
+    )
   }
 }

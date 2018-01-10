@@ -16,6 +16,6 @@ export default class Home extends Component<Props> {
           <Link to="/counter">to Counter1</Link>
         </div>
       </div>
-    );
+    )
   }
 }

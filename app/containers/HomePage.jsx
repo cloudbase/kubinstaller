@@ -10,6 +10,6 @@ export default class HomePage extends Component<Props> {
   render() {
     return (
       <Home />
-    );
+    )
   }
 }

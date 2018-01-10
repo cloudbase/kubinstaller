@@ -16,5 +16,5 @@ export default function Root({ store, history }: RootType) {
         <Routes />
       </ConnectedRouter>
     </Provider>
-  );
+  )
 }

@@ -16,8 +16,8 @@ class Counter extends Component<Props> {
 
   render() {
     const {
-      increment, incrementIfOdd, incrementAsync, decrement, counter
-    } = this.props;
+      increment, incrementIfOdd, incrementAsync, decrement, counter,
+    } = this.props
     return (
       <div>
         <div className={styles.backButton} data-tid="backButton">
@@ -39,8 +39,8 @@ class Counter extends Component<Props> {
           <button className={styles.btn} onClick={() => incrementAsync()} data-tclass="btn">async</button>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default Counter;
+export default Counter
