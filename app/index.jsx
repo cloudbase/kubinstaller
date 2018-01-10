@@ -6,8 +6,8 @@ import { AppContainer } from 'react-hot-loader'
 import './app.global.css'
 
 import App from './components/App'
-import HomePage from './components/HomePage'
-import CounterPage from './components/CounterPage'
+import HomePage from './components/pages/HomePage'
+import CounterPage from './components/pages/CounterPage'
 
 let history = createHashHistory()
 const renderApp = () => {

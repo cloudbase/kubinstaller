@@ -1,5 +1,5 @@
 import React from 'react'
-import Home from './Home'
+import Home from '../organisms/Home'
 
 class HomePage extends React.Component {
   render() {

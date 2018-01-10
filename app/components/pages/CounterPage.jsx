@@ -1,5 +1,5 @@
 import React from 'react'
-import Counter from './Counter'
+import Counter from '../organisms/Counter'
 
 class CounterPage extends React.Component {
   render() {
