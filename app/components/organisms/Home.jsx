@@ -1,7 +1,11 @@
 // @flow
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import styles from './Home.css';
+
+import React, { Component } from 'react'
+import styled from 'styled-components'
+
+const Wrapper = styled.div`
+  color: blue;
+`
 
 type Props = {};
 
@@ -10,12 +14,7 @@ export default class Home extends Component<Props> {
 
   render() {
     return (
-      <div>
-        <div className={styles.container} data-tid="container">
-          <h2>Home</h2>
-          <Link to="/counter">to Counter</Link>
-        </div>
-      </div>
+      <Wrapper>Home</Wrapper>
     )
   }
 }

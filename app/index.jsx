@@ -3,11 +3,16 @@ import { render } from 'react-dom'
 import { Switch, Route, Router } from 'react-router'
 import { createHashHistory } from 'history'
 import { AppContainer } from 'react-hot-loader'
-import './app.global.css'
+import { injectGlobal } from 'styled-components'
 
 import App from './components/App'
 import HomePage from './components/pages/HomePage'
-import CounterPage from './components/pages/CounterPage'
+
+injectGlobal`
+  body {
+    margin: 0;
+  }
+`
 
 let history = createHashHistory()
 const renderApp = () => {
@@ -16,7 +21,6 @@ const renderApp = () => {
       <App>
         <Router history={history}>
           <Switch>
-            <Route path="/counter" component={CounterPage} />
             <Route path="/" component={HomePage} />
           </Switch>
         </Router>
