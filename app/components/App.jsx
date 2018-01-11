@@ -11,6 +11,9 @@ injectGlobal`
     margin: 0;
     font-family: Roboto;
     font-size: 14px;
+    color: #353746;
+    background: #EEF0F3;
+    padding: 60px 48px 48px 48px;
   }
 `
 

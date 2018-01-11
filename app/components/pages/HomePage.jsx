@@ -1,15 +1,15 @@
 import React from 'react'
+import styled from 'styled-components'
 import connectToStores from '../../utils/connectToStores'
 
 import HomeStore from '../../stores/HomeStore'
-import Home from '../organisms/Home'
+import Header from '../atoms/Header'
+import OptionsPanel from '../organisms/OptionsPanel'
 import HomeActions from '../../actions/HomeActions'
 
-type Props = {
-  array: Array,
-}
+const Wrapper = styled.div``
 
-class HomePage extends React.Component<Props> {
+class HomePage extends React.Component {
   static getStores() {
     return [HomeStore]
   }
@@ -25,7 +25,12 @@ class HomePage extends React.Component<Props> {
   }
 
   render() {
-    return <Home array={this.props.array} onAddClick={() => { this.handleAddClick() }} />
+    return (
+      <Wrapper>
+        <Header />
+        <OptionsPanel />
+      </Wrapper>
+    )
   }
 }
 
