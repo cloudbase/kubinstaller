@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import logo from '../../resources/images/logo.svg'
+import StyleHelper from '../../utils/StyleHelper'
 
 const Wrapper = styled.div`
   display: flex;
@@ -9,8 +10,7 @@ const Wrapper = styled.div`
   margin-bottom: 52px;
 `
 const Logo = styled.div`
-  width: 72px;
-  height: 72px;
+  ${StyleHelper.exactSize('72px')}
   background: url('${logo}') center no-repeat;
 `
 const Text = styled.div`

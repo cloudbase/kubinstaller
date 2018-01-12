@@ -7,6 +7,15 @@ class StyleHelper {
       max-width: ${width};
     `
   }
+  static exactHeight = height => {
+    return css`
+      min-height: ${height};
+      max-height: ${height};
+    `
+  }
+  static exactSize = size => {
+    return [ ...StyleHelper.exactWidth(size), ...StyleHelper.exactHeight(size) ]
+  }
 }
 
 export default StyleHelper
