@@ -2,8 +2,11 @@
 
 import React from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import { injectGlobal } from 'styled-components'
+
 import Fonts from './atoms/Fonts'
+import MuiTheme from '../utils/MuiTheme'
 
 injectGlobal`
   ${Fonts}
@@ -27,7 +30,7 @@ export default class App extends React.Component<Props> {
 
   render() {
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={getMuiTheme(MuiTheme)}>
         <div>
           {this.props.children}
         </div>

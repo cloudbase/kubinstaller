@@ -2,13 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import MenuItem from 'material-ui/MenuItem'
+import DropDownMenu from 'material-ui/DropDownMenu'
+import TextField from 'material-ui/TextField'
+import Toggle from 'material-ui/Toggle'
 
-import TextField from '../atoms/TextField'
-import Palette from '../../utils/Palette'
+import MuiTheme from '../../utils/MuiTheme'
+import StyleHelper from '../../utils/StyleHelper'
+
 import Panel from '../atoms/Panel'
-import DropDownMenu from '../atoms/DropDownMenu'
-import Toggle from '../atoms/Toggle'
 
+const PanelStyled = styled(Panel)`
+  ${StyleHelper.exactWidth('300px')}
+`
 const NetworkDriver = styled.div`
   display: flex;
   justify-content: space-between;
@@ -28,7 +33,7 @@ const Group = styled.div`
 `
 const GroupLabel = styled.div`
   font-size: 12px;
-  color: ${Palette.grayscale[1]};
+  color: ${MuiTheme.palette.border2Color}};
   margin-bottom: 3px;
 `
 const IpRange = styled.div`
@@ -40,7 +45,7 @@ const IpRange = styled.div`
 `
 const Option = styled.div`
   padding: 12px 0;
-  border-top: 1px solid ${Palette.grayscale[0]};
+  border-top: 1px solid ${MuiTheme.palette.borderColor};
   &:last-child {
     padding-bottom: 0;
   }
@@ -69,7 +74,7 @@ class OptionsPanel extends React.Component {
 
   render() {
     return (
-      <Panel title="Options">
+      <PanelStyled title="Options">
         <NetworkDriver>
           <NetworkDriverLabel>Network Driver</NetworkDriverLabel>
           <DropDownMenu
@@ -87,11 +92,15 @@ class OptionsPanel extends React.Component {
             <IpRange>
               <TextField
                 floatingLabelText="Start IP"
+                floatingLabelFixed
+                fullWidth
                 value={this.props.clusterNetworkStartIp}
                 onChange={e => { this.props.onClusterNetworkStartIpChange(e.target.value) }}
               />
               <TextField
                 floatingLabelText="End IP"
+                floatingLabelFixed
+                fullWidth
                 value={this.props.clusterNetworkEndIp}
                 onChange={e => { this.props.onClusterNetworkEndIpChange(e.target.value) }}
               />
@@ -102,11 +111,15 @@ class OptionsPanel extends React.Component {
             <IpRange>
               <TextField
                 floatingLabelText="Start IP"
+                floatingLabelFixed
+                fullWidth
                 value={this.props.serviceNetworkStartIp}
                 onChange={e => { this.props.onServiceNetworkStartIpChange(e.target.value) }}
               />
               <TextField
                 floatingLabelText="End IP"
+                floatingLabelFixed
+                fullWidth
                 value={this.props.serviceNetworkEndIp}
                 onChange={e => { this.props.onServiceNetworkEndIpChange(e.target.value) }}
               />
@@ -134,7 +147,7 @@ class OptionsPanel extends React.Component {
             onToggle={(e, isToggled) => { this.props.onRegistryToggle(isToggled) }}
           />
         </Option>
-      </Panel>
+      </PanelStyled>
     )
   }
 }

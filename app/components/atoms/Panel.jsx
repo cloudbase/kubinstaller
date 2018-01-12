@@ -16,16 +16,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import Palette from '../../utils/Palette'
+import MuiTheme from '../../utils/MuiTheme'
 
 const Wrapper = styled.div`
   background: white;
-  border: 1px solid ${Palette.grayscale[0]};
+  border: 1px solid ${MuiTheme.palette.borderColor};
+  position: relative;
 `
 const Title = styled.div`
   padding: 22px 20px;
   font-size: 20px;
-  border-bottom: 1px solid ${Palette.grayscale[0]};
+  border-bottom: 1px solid ${MuiTheme.palette.borderColor};
 `
 const Body = styled.div`
   padding: 22px 20px;
@@ -35,11 +36,12 @@ class Panel extends React.Component {
   static propTypes = {
     children: PropTypes.node,
     title: PropTypes.string,
+    className: PropTypes.string,
   }
 
   render() {
     return (
-      <Wrapper>
+      <Wrapper className={this.props.className}>
         <Title>{this.props.title}</Title>
         <Body>{this.props.children}</Body>
       </Wrapper>
