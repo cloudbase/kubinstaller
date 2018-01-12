@@ -5,7 +5,7 @@ import { createHashHistory } from 'history'
 import { AppContainer } from 'react-hot-loader'
 
 import App from './components/App'
-import HomePage from './components/pages/HomePage'
+import HomePage from './components/containers/HomePage'
 
 let history = createHashHistory()
 const renderApp = () => {
