@@ -7,11 +7,19 @@
     "stage-0",
     "react"
   ],
-  "plugins": ["add-module-exports", "dynamic-import-webpack"],
+  "plugins": ["add-module-exports", "dynamic-import-webpack", "babel-plugin-styled-components"],
   "env": {
     "production": {
       "presets": ["react-optimize"],
-      "plugins": ["dev-expression"]
+      "plugins": [
+        "dev-expression", 
+        [
+          "styled-components",
+          {
+            "displayName": false
+          }
+        ]
+      ]
     },
     "development": {
       "plugins": [

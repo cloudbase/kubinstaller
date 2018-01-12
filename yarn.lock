@@ -778,6 +778,13 @@ babel-plugin-react-transform@^2.0.2:
   dependencies:
     lodash "^4.6.1"
 
+babel-plugin-styled-components@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-styled-components/-/babel-plugin-styled-components-1.4.0.tgz#3a2207a1852770a383f0106ca85aded4f3e3488f"
+  dependencies:
+    babel-types "^6.26.0"
+    stylis "^3.0.0"
+
 babel-plugin-syntax-async-functions@^6.8.0:
   version "6.13.0"
   resolved "https://registry.npmjs.org/babel-plugin-syntax-async-functions/-/babel-plugin-syntax-async-functions-6.13.0.tgz#cad9cad1191b5ad634bf30ae0872391e0647be95"
@@ -9416,6 +9423,10 @@ stylelint@^8.4.0:
     sugarss "^1.0.0"
     svg-tags "^1.0.0"
     table "^4.0.1"
+
+stylis@^3.0.0:
+  version "3.4.8"
+  resolved "https://registry.yarnpkg.com/stylis/-/stylis-3.4.8.tgz#94380babbcd4c75726215794ca985b38ec96d1a3"
 
 stylis@^3.4.0:
   version "3.4.7"

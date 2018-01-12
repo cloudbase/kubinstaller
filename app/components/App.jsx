@@ -14,6 +14,7 @@ injectGlobal`
     color: #353746;
     background: #EEF0F3;
     padding: 60px 48px 48px 48px;
+    -webkit-font-smoothing: antialiased;
   }
 `
 
