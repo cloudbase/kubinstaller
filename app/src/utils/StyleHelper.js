@@ -14,7 +14,11 @@ class StyleHelper {
     `
   }
   static exactSize = size => {
-    return [ ...StyleHelper.exactWidth(size), ...StyleHelper.exactHeight(size) ]
+    return [...StyleHelper.exactWidth(size), ...StyleHelper.exactHeight(size)]
+  }
+  static fontWeights = {
+    light: 'font-weight: 300;',
+    medium: 'font-weight: 500;',
   }
 }
 

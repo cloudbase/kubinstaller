@@ -13,7 +13,9 @@ import ContentAdd from 'material-ui/svg-icons/content/add'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import Toggle from 'material-ui/Toggle'
 import FlatButton from 'material-ui/FlatButton'
+import ActionDelete from 'material-ui/svg-icons/action/delete'
 
+import MuiTheme from '../../utils/MuiTheme'
 import Panel from '../atoms/Panel'
 
 const PanelStyled = styled(Panel)`
@@ -22,8 +24,19 @@ const PanelStyled = styled(Panel)`
 `
 const FloatingActionButtonStyled = styled(FloatingActionButton)`
   position: absolute;
-  top: -29px;
-  right: 29px;
+  bottom: -28px;
+  left: 28px;
+`
+const SelectionInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: ${MuiTheme.palette.primary2Color};
+  padding: 16px 26px;
+`
+const SelectionInfoText = styled.div`
+  font-size: 12px;
+  color: ${MuiTheme.palette.secondaryTextColor};
 `
 
 class NodesPanel extends React.Component {
@@ -38,12 +51,18 @@ class NodesPanel extends React.Component {
 
   render() {
     return (
-      <PanelStyled title="Nodes">
+      <PanelStyled title="Nodes" noPadding>
         <FloatingActionButtonStyled
           onClick={() => { this.props.onNewNodeClick() }}
         >
           <ContentAdd />
         </FloatingActionButtonStyled>
+        {this.props.selectedNodes.length > 0 ? (
+          <SelectionInfo>
+            <SelectionInfoText>{this.props.selectedNodes.length} item{this.props.selectedNodes.length > 1 ? 's' : ''} selected</SelectionInfoText>
+            <ActionDelete color={MuiTheme.palette.accent3Color} style={{ cursor: 'pointer' }} />
+          </SelectionInfo>
+        ) : null}
         <Table
           multiSelectable
           enableSelectAll
@@ -59,7 +78,7 @@ class NodesPanel extends React.Component {
               <TableHeaderColumn>Credentials</TableHeaderColumn>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          <TableBody deselectOnClickaway={false}>
             {this.props.nodes.map((node, i) => ((
               <TableRow
                 key={node.id}

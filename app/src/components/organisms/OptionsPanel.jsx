@@ -79,6 +79,7 @@ class OptionsPanel extends React.Component {
           <NetworkDriverLabel>Network Driver</NetworkDriverLabel>
           <DropDownMenu
             value={this.props.selectedNetworkDriver}
+            labelStyle={{ color: MuiTheme.palette.primary1Color }}
             onChange={(e, i, value) => { this.props.onNetworkDriverChange(value) }}
           >
             {this.props.networkDrivers.map(driver => (

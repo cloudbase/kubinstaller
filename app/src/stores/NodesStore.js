@@ -35,7 +35,13 @@ class NodesStore {
   }
 
   onUpdateSelection({ value }) {
-    this.selectedNodes = [...value]
+    if (value === 'all') {
+      this.selectedNodes = this.nodes.map((n, i) => i)
+    } else if (value === 'none') {
+      this.selectedNodes = []
+    } else {
+      this.selectedNodes = [...value]
+    }
   }
 
   onNodeApiToggle({ node, toggled }) {

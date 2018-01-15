@@ -7,9 +7,9 @@ import OptionsStore from '../../stores/OptionsStore'
 import OptionsActions from '../../actions/OptionsActions'
 import NodesStore from '../../stores/NodesStore'
 import NodesActions from '../../actions/NodesActions'
-import Header from '../atoms/Header'
 import OptionsPanel from '../organisms/OptionsPanel'
 import NodesPanel from '../organisms/NodesPanel'
+import MainTemplate from './MainTemplate'
 
 const Wrapper = styled.div``
 const Panels = styled.div`
@@ -107,38 +107,41 @@ class HomePage extends React.Component {
 
   render() {
     return (
-      <Wrapper>
-        <Header />
-        <Panels>
-          <OptionsPanel
-            networkDrivers={this.props.networkDrivers}
-            selectedNetworkDriver={this.props.selectedNetworkDriver}
-            onNetworkDriverChange={v => { this.handleNetworkDriverChange(v) }}
-            clusterNetworkStartIp={this.props.clusterNetworkStartIp}
-            clusterNetworkEndIp={this.props.clusterNetworkEndIp}
-            onClusterNetworkStartIpChange={v => { this.handleClusterNetworkStartIpChange(v) }}
-            onClusterNetworkEndIpChange={v => { this.handleClusterNetworkEndIpChange(v) }}
-            serviceNetworkStartIp={this.props.serviceNetworkStartIp}
-            serviceNetworkEndIp={this.props.serviceNetworkEndIp}
-            onServiceNetworkStartIpChange={v => { this.handleServiceNetworkStartIpChange(v) }}
-            onServiceNetworkEndIpChange={v => { this.handleServiceNetworkEndIpChange(v) }}
-            ingressToggled={this.props.ingressToggled}
-            onIngressToggle={v => { this.handleIngressToggle(v) }}
-            helmToggled={this.props.helmToggled}
-            onHelmToggle={v => { this.handleHelmToggle(v) }}
-            registryToggled={this.props.registryToggled}
-            onRegistryToggle={v => { this.handleRegistryToggle(v) }}
-          />
-          <NodesPanel
-            nodes={this.props.nodes}
-            selectedNodes={this.props.selectedNodes}
-            onNodeSelection={selection => { this.handleNodeSelection(selection) }}
-            onNodeApiToggle={(node, toggled) => { this.handleNodeApiToggle(node, toggled) }}
-            onNodeEnabledToggle={(node, toggled) => { this.handleNodeEnabledToggle(node, toggled) }}
-            onNewNodeClick={() => { this.handleNewNodeClick() }}
-          />
-        </Panels>
-      </Wrapper>
+      <MainTemplate
+        body={(
+          <Wrapper>
+            <Panels>
+              <NodesPanel
+                nodes={this.props.nodes}
+                selectedNodes={this.props.selectedNodes}
+                onNodeSelection={selection => { this.handleNodeSelection(selection) }}
+                onNodeApiToggle={(node, toggled) => { this.handleNodeApiToggle(node, toggled) }}
+                onNodeEnabledToggle={(node, toggled) => { this.handleNodeEnabledToggle(node, toggled) }}
+                onNewNodeClick={() => { this.handleNewNodeClick() }}
+              />
+              <OptionsPanel
+                networkDrivers={this.props.networkDrivers}
+                selectedNetworkDriver={this.props.selectedNetworkDriver}
+                onNetworkDriverChange={v => { this.handleNetworkDriverChange(v) }}
+                clusterNetworkStartIp={this.props.clusterNetworkStartIp}
+                clusterNetworkEndIp={this.props.clusterNetworkEndIp}
+                onClusterNetworkStartIpChange={v => { this.handleClusterNetworkStartIpChange(v) }}
+                onClusterNetworkEndIpChange={v => { this.handleClusterNetworkEndIpChange(v) }}
+                serviceNetworkStartIp={this.props.serviceNetworkStartIp}
+                serviceNetworkEndIp={this.props.serviceNetworkEndIp}
+                onServiceNetworkStartIpChange={v => { this.handleServiceNetworkStartIpChange(v) }}
+                onServiceNetworkEndIpChange={v => { this.handleServiceNetworkEndIpChange(v) }}
+                ingressToggled={this.props.ingressToggled}
+                onIngressToggle={v => { this.handleIngressToggle(v) }}
+                helmToggled={this.props.helmToggled}
+                onHelmToggle={v => { this.handleHelmToggle(v) }}
+                registryToggled={this.props.registryToggled}
+                onRegistryToggle={v => { this.handleRegistryToggle(v) }}
+              />
+            </Panels>
+          </Wrapper>
+      )}
+      />
     )
   }
 }

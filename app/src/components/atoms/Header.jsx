@@ -10,12 +10,24 @@ const Wrapper = styled.div`
   margin-bottom: 52px;
 `
 const Logo = styled.div`
-  ${StyleHelper.exactSize('72px')}
+  ${StyleHelper.exactSize('77px')}
   background: url('${logo}') center no-repeat;
 `
 const Text = styled.div`
-  font-size: 35px;
-  margin-left: 20px;
+  margin-left: 12px;
+`
+const Name = styled.div`
+  font-size: 41px;
+  display: flex;
+`
+const NameLight = styled.div`
+  ${StyleHelper.fontWeights.light};
+`
+const NameBold = styled.div`
+  ${StyleHelper.fontWeights.medium};
+`
+const Description = styled.div`
+  color: #5D5F6C;
 `
 
 class Header extends React.Component {
@@ -23,7 +35,13 @@ class Header extends React.Component {
     return (
       <Wrapper>
         <Logo />
-        <Text>kubinstaller</Text>
+        <Text>
+          <Name>
+            <NameLight>kub</NameLight>
+            <NameBold>installer</NameBold>
+          </Name>
+          <Description>The Kubernetes Cluster Installer</Description>
+        </Text>
       </Wrapper>
     )
   }
