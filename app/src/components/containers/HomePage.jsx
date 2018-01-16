@@ -1,6 +1,7 @@
+// @flow
+
 import React from 'react'
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
 import connectToStores from '../../utils/connectToStores'
 
 import OptionsStore from '../../stores/OptionsStore'
@@ -10,6 +11,7 @@ import NodesActions from '../../actions/NodesActions'
 import OptionsPanel from '../organisms/OptionsPanel'
 import NodesPanel from '../organisms/NodesPanel'
 import MainTemplate from './MainTemplate'
+import Node from '../../models/Node'
 
 const Wrapper = styled.div``
 const Panels = styled.div`
@@ -20,21 +22,21 @@ const Panels = styled.div`
   }
 `
 
-class HomePage extends React.Component {
-  static propTypes = {
-    networkDrivers: PropTypes.array,
-    selectedNetworkDriver: PropTypes.string,
-    clusterNetworkStartIp: PropTypes.string,
-    clusterNetworkEndIp: PropTypes.string,
-    serviceNetworkStartIp: PropTypes.string,
-    serviceNetworkEndIp: PropTypes.string,
-    ingressToggled: PropTypes.bool,
-    helmToggled: PropTypes.bool,
-    registryToggled: PropTypes.bool,
-    nodes: PropTypes.array,
-    selectedNodes: PropTypes.array,
-  }
+type Props = {
+  networkDrivers: Array<any>,
+  selectedNetworkDriver: string,
+  clusterNetworkStartIp: string,
+  clusterNetworkEndIp: string,
+  serviceNetworkStartIp: string,
+  serviceNetworkEndIp: string,
+  ingressToggled: boolean,
+  helmToggled: boolean,
+  registryToggled: boolean,
+  nodes: Array<Node>,
+  selectedNodes: Array<number>,
+}
 
+class HomePage extends React.Component<Props> {
   static getStores() {
     return [OptionsStore, NodesStore]
   }
@@ -93,7 +95,7 @@ class HomePage extends React.Component {
     NodesActions.updateSelection(selection)
   }
 
-  handleNodeApiToggle(node, toggled) {
+  handleNodeApiToggle(node: Node, toggled) {
     NodesActions.nodeApiToggle(node, toggled)
   }
 
@@ -115,7 +117,7 @@ class HomePage extends React.Component {
                 nodes={this.props.nodes}
                 selectedNodes={this.props.selectedNodes}
                 onNodeSelection={selection => { this.handleNodeSelection(selection) }}
-                onNodeApiToggle={(node, toggled) => { this.handleNodeApiToggle(node, toggled) }}
+                onNodeApiToggle={(node: Node, toggled) => { this.handleNodeApiToggle(node, toggled) }}
                 onNodeEnabledToggle={(node, toggled) => { this.handleNodeEnabledToggle(node, toggled) }}
                 onNewNodeClick={() => { this.handleNewNodeClick() }}
               />

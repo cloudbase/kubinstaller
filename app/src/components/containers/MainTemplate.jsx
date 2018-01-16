@@ -1,6 +1,7 @@
-import React from 'react'
+// @flow
+
+import * as React from 'react'
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 
@@ -20,11 +21,11 @@ const RaisedButtons = styled.div`
 `
 const FlatButtons = styled.div``
 
-class MainTemplate extends React.Component {
-  static propTypes = {
-    body: PropTypes.node,
-  }
+type Props = {
+  body: React.Node,
+}
 
+class MainTemplate extends React.Component<Props> {
   render() {
     return (
       <Wrapper>

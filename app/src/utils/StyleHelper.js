@@ -1,19 +1,21 @@
+// @flow
+
 import { css } from 'styled-components'
 
 class StyleHelper {
-  static exactWidth = width => {
+  static exactWidth = (width: string) => {
     return css`
       min-width: ${width};
       max-width: ${width};
     `
   }
-  static exactHeight = height => {
+  static exactHeight = (height: string) => {
     return css`
       min-height: ${height};
       max-height: ${height};
     `
   }
-  static exactSize = size => {
+  static exactSize = (size: string) => {
     return [...StyleHelper.exactWidth(size), ...StyleHelper.exactHeight(size)]
   }
   static fontWeights = {

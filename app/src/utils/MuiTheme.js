@@ -1,3 +1,5 @@
+// @flow
+
 const palette = {
   primary1Color: '#326CE5',
   primary2Color: '#E8EFFC',

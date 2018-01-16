@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react'
 import styled from 'styled-components'
 
@@ -30,7 +32,8 @@ const Description = styled.div`
   color: #5D5F6C;
 `
 
-class Header extends React.Component {
+type Props = {}
+class Header extends React.Component<Props> {
   render() {
     return (
       <Wrapper>

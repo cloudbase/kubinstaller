@@ -1,35 +1,37 @@
+// @flow
+
 import alt from '../alt'
 
 class OptionsActions {
-  updateSelectedNetworkDriver(value) {
+  updateSelectedNetworkDriver(value: string) {
     return { value }
   }
 
-  updateClusterNetworkStartIp(value) {
+  updateClusterNetworkStartIp(value: string) {
     return { value }
   }
 
-  updateClusterNetworkEndIp(value) {
+  updateClusterNetworkEndIp(value: string) {
     return { value }
   }
 
-  updateServiceNetworkStartIp(value) {
+  updateServiceNetworkStartIp(value: string) {
     return { value }
   }
 
-  updateServiceNetworkEndIp(value) {
+  updateServiceNetworkEndIp(value: string) {
     return { value }
   }
 
-  updateIngressToggle(value) {
+  updateIngressToggle(value: boolean) {
     return { value }
   }
 
-  updateHelmToggle(value) {
+  updateHelmToggle(value: boolean) {
     return { value }
   }
 
-  updateRegistryToggle(value) {
+  updateRegistryToggle(value: boolean) {
     return { value }
   }
 }

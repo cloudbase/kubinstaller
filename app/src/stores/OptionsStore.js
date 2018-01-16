@@ -1,10 +1,24 @@
+// @flow
+
 import alt from '../alt'
 
 import OptionsActions from '../actions/OptionsActions'
+import NetworkDriver from '../models/NetworkDriver'
 
 class OptionsStore {
+  networkDrivers: Array<NetworkDriver>
+  selectedNetworkDriver: string
+  clusterNetworkStartIp: string
+  clusterNetworkEndIp: string
+  serviceNetworkStartIp: string
+  serviceNetworkEndIp: string
+  ingressToggled: boolean
+  helmToggled: boolean
+  registryToggled: boolean
+  bindActions: (actions: OptionsActions) => void
+
   constructor() {
-    this.networkDrivers = [{ name: 'OVS' }, { name: 'Others' }]
+    this.networkDrivers = [new NetworkDriver({ name: 'OVS' }), new NetworkDriver({ name: 'Others' })]
     this.selectedNetworkDriver = 'OVS'
     this.clusterNetworkStartIp = ''
     this.clusterNetworkEndIp = ''
@@ -17,36 +31,36 @@ class OptionsStore {
     this.bindActions(OptionsActions)
   }
 
-  onUpdateSelectedNetworkDriver({ value }) {
-    this.selectedNetworkDriver = value
+  onUpdateSelectedNetworkDriver(arg: { value: string, }) {
+    this.selectedNetworkDriver = arg.value
   }
 
-  onUpdateClusterNetworkStartIp({ value }) {
-    this.clusterNetworkStartIp = value
+  onUpdateClusterNetworkStartIp(arg: { value: string, }) {
+    this.clusterNetworkStartIp = arg.value
   }
 
-  onUpdateClusterNetworkEndIp({ value }) {
-    this.clusterNetworkEndIp = value
+  onUpdateClusterNetworkEndIp(arg: { value: string, }) {
+    this.clusterNetworkEndIp = arg.value
   }
 
-  onUpdateServiceNetworkStartIp({ value }) {
-    this.serviceNetworkStartIp = value
+  onUpdateServiceNetworkStartIp(arg: { value: string, }) {
+    this.serviceNetworkStartIp = arg.value
   }
 
-  onUpdateServiceNetworkEndIp({ value }) {
-    this.serviceNetworkEndIp = value
+  onUpdateServiceNetworkEndIp(arg: { value: string, }) {
+    this.serviceNetworkEndIp = arg.value
   }
 
-  onUpdateIngressToggle({ value }) {
-    this.ingressToggled = value
+  onUpdateIngressToggle(arg: { value: boolean, }) {
+    this.ingressToggled = arg.value
   }
 
-  onUpdateHelmToggle({ value }) {
-    this.helmToggled = value
+  onUpdateHelmToggle(arg: { value: boolean, }) {
+    this.helmToggled = arg.value
   }
 
-  onUpdateRegistryToggle({ value }) {
-    this.registryToggled = value
+  onUpdateRegistryToggle(arg: { value: boolean, }) {
+    this.registryToggled = arg.value
   }
 }
 

@@ -1,19 +1,6 @@
-/*
-Copyright (C) 2017  Cloudbase Solutions SRL
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as
-published by the Free Software Foundation, either version 3 of the
-License, or (at your option) any later version.
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
-You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+// @flow
 
-import React from 'react'
-import PropTypes from 'prop-types'
+import * as React from 'react'
 import styled from 'styled-components'
 
 import MuiTheme from '../../utils/MuiTheme'
@@ -32,14 +19,14 @@ const Body = styled.div`
   ${props => props.noPadding ? '' : 'padding: 22px 20px;'}
 `
 
-class Panel extends React.Component {
-  static propTypes = {
-    children: PropTypes.node,
-    title: PropTypes.string,
-    className: PropTypes.string,
-    noPadding: PropTypes.bool,
-  }
+type Props = {
+  children: React.Node,
+  title: string,
+  className: string,
+  noPadding?: boolean,
+}
 
+class Panel extends React.Component<Props> {
   render() {
     return (
       <Wrapper className={this.props.className}>

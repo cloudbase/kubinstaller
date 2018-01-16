@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react'
+import * as React from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import { injectGlobal } from 'styled-components'
@@ -22,8 +22,8 @@ injectGlobal`
 `
 
 type Props = {
-  children: React.Node
-};
+  children: React.Node,
+}
 
 export default class App extends React.Component<Props> {
   props: Props;

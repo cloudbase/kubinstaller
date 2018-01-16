@@ -1,6 +1,7 @@
-import React from 'react'
+// @flow
+
+import * as React from 'react'
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
 import {
   Table,
   TableBody,
@@ -15,6 +16,7 @@ import Toggle from 'material-ui/Toggle'
 import FlatButton from 'material-ui/FlatButton'
 import ActionDelete from 'material-ui/svg-icons/action/delete'
 
+import Node from '../../models/Node'
 import MuiTheme from '../../utils/MuiTheme'
 import Panel from '../atoms/Panel'
 
@@ -39,16 +41,16 @@ const SelectionInfoText = styled.div`
   color: ${MuiTheme.palette.secondaryTextColor};
 `
 
-class NodesPanel extends React.Component {
-  static propTypes = {
-    nodes: PropTypes.array,
-    selectedNodes: PropTypes.array,
-    onNodeSelection: PropTypes.func,
-    onNodeApiToggle: PropTypes.func,
-    onNodeEnabledToggle: PropTypes.func,
-    onNewNodeClick: PropTypes.func,
-  }
+type Props = {
+  nodes: Array<Node>,
+  selectedNodes: Array<number>,
+  onNodeSelection: () => void,
+  onNodeApiToggle: (node: Node, toggled: boolean) => void,
+  onNodeEnabledToggle: (node: Node, toggled: boolean) => void,
+  onNewNodeClick: () => void,
+}
 
+class NodesPanel extends React.Component<Props> {
   render() {
     return (
       <PanelStyled title="Nodes" noPadding>
@@ -79,7 +81,7 @@ class NodesPanel extends React.Component {
             </TableRow>
           </TableHeader>
           <TableBody deselectOnClickaway={false}>
-            {this.props.nodes.map((node, i) => ((
+            {this.props.nodes.map((node: Node, i: number) => ((
               <TableRow
                 key={node.id}
                 selected={this.props.selectedNodes.findIndex(rowIndex => rowIndex === i) > -1}
@@ -90,7 +92,7 @@ class NodesPanel extends React.Component {
                   <Toggle
                     toggled={node.api}
                     onClick={e => { e.stopPropagation() }}
-                    onToggle={(e, toggled) => { this.props.onNodeApiToggle(node, toggled) }}
+                    onToggle={(e, toggled: boolean) => { this.props.onNodeApiToggle(node, toggled) }}
                   />
                 </TableRowColumn>
                 <TableRowColumn>

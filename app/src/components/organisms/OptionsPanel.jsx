@@ -1,5 +1,6 @@
+// @flow
+
 import React from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import MenuItem from 'material-ui/MenuItem'
 import DropDownMenu from 'material-ui/DropDownMenu'
@@ -8,13 +9,13 @@ import Toggle from 'material-ui/Toggle'
 
 import MuiTheme from '../../utils/MuiTheme'
 import StyleHelper from '../../utils/StyleHelper'
-
+import NetworkDriver from '../../models/NetworkDriver'
 import Panel from '../atoms/Panel'
 
 const PanelStyled = styled(Panel)`
   ${StyleHelper.exactWidth('300px')}
 `
-const NetworkDriver = styled.div`
+const NetworkDriverWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -51,42 +52,42 @@ const Option = styled.div`
   }
 `
 
-class OptionsPanel extends React.Component {
-  static propTypes = {
-    networkDrivers: PropTypes.array,
-    selectedNetworkDriver: PropTypes.string,
-    onNetworkDriverChange: PropTypes.func,
-    clusterNetworkStartIp: PropTypes.string,
-    clusterNetworkEndIp: PropTypes.string,
-    onClusterNetworkStartIpChange: PropTypes.func,
-    onClusterNetworkEndIpChange: PropTypes.func,
-    serviceNetworkStartIp: PropTypes.string,
-    serviceNetworkEndIp: PropTypes.string,
-    onServiceNetworkStartIpChange: PropTypes.func,
-    onServiceNetworkEndIpChange: PropTypes.func,
-    ingressToggled: PropTypes.bool,
-    onIngressToggle: PropTypes.func,
-    helmToggled: PropTypes.bool,
-    onHelmToggle: PropTypes.func,
-    registryToggled: PropTypes.bool,
-    onRegistryToggle: PropTypes.func,
-  }
+type Props = {
+  networkDrivers: Array<NetworkDriver>,
+  selectedNetworkDriver: string,
+  onNetworkDriverChange: (_: NetworkDriver) => void,
+  clusterNetworkStartIp: string,
+  clusterNetworkEndIp: string,
+  onClusterNetworkStartIpChange: (_: string) => void,
+  onClusterNetworkEndIpChange: (_: string) => void,
+  serviceNetworkStartIp: string,
+  serviceNetworkEndIp: string,
+  onServiceNetworkStartIpChange: (_: string) => void,
+  onServiceNetworkEndIpChange: (_: string) => void,
+  ingressToggled: boolean,
+  onIngressToggle: (_: boolean) => void,
+  helmToggled: boolean,
+  onHelmToggle: (_: boolean) => void,
+  registryToggled: boolean,
+  onRegistryToggle: (_: boolean) => void,
+}
 
+class OptionsPanel extends React.Component<Props> {
   render() {
     return (
       <PanelStyled title="Options">
-        <NetworkDriver>
+        <NetworkDriverWrapper>
           <NetworkDriverLabel>Network Driver</NetworkDriverLabel>
           <DropDownMenu
             value={this.props.selectedNetworkDriver}
             labelStyle={{ color: MuiTheme.palette.primary1Color }}
-            onChange={(e, i, value) => { this.props.onNetworkDriverChange(value) }}
+            onChange={(e, i, value: NetworkDriver) => { this.props.onNetworkDriverChange(value) }}
           >
             {this.props.networkDrivers.map(driver => (
               <MenuItem key={driver.name} value={driver.name} primaryText={driver.name} />
             ))}
           </DropDownMenu>
-        </NetworkDriver>
+        </NetworkDriverWrapper>
         <IpRanges>
           <Group>
             <GroupLabel>Cluster Network Range</GroupLabel>

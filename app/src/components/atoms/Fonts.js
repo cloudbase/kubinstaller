@@ -1,3 +1,5 @@
+// @flow
+
 import { css } from 'styled-components'
 
 import RobotoBlack from '../../resources/fonts/Roboto-Black.ttf'

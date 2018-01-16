@@ -1,15 +1,18 @@
+// @flow
+
 import alt from '../alt'
+import Node from '../models/Node'
 
 class NodesActions {
-  updateSelection(value) {
+  updateSelection(value: string | Array<number>) {
     return { value }
   }
 
-  nodeApiToggle(node, toggled) {
+  nodeApiToggle(node: Node, toggled: boolean) {
     return { node, toggled }
   }
 
-  nodeEnabledToggle(node, toggled) {
+  nodeEnabledToggle(node: Node, toggled: boolean) {
     return { node, toggled }
   }
 
