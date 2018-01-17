@@ -1,6 +1,5 @@
 import React from 'react'
 
-// @todo Where to get these from?
 const isFunction = x => typeof x === 'function'
 const eachObject = (f, o) => {
   o.forEach((from) => {
@@ -15,7 +14,6 @@ const assign = (target, ...source) => {
 }
 
 function connectToStores(Spec, Component = Spec) {
-  // Check for required static methods.
   if (!isFunction(Spec.getStores)) {
     throw new Error('connectToStores() expects the wrapped component to have a static getStores() method')
   }
