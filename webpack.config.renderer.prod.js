@@ -18,7 +18,7 @@ export default merge.smart(baseConfig, {
 
   target: 'electron-renderer',
 
-  entry: './app/index',
+  entry: './app/src/index',
 
   output: {
     path: path.join(__dirname, 'app/dist'),
@@ -168,8 +168,6 @@ export default merge.smart(baseConfig, {
       parallel: true,
       sourceMap: true,
     }),
-
-    new ExtractTextPlugin('style.css'),
 
     new BundleAnalyzerPlugin({
       analyzerMode: process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',

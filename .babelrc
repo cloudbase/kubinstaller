@@ -7,7 +7,13 @@
     "stage-0",
     "react"
   ],
-  "plugins": ["add-module-exports", "dynamic-import-webpack", "babel-plugin-styled-components"],
+  "plugins": [
+    "add-module-exports", 
+    "dynamic-import-webpack", 
+    "babel-plugin-styled-components",
+    "transform-class-properties",
+    "transform-es2015-classes"
+  ],
   "env": {
     "production": {
       "presets": ["react-optimize"],
@@ -19,12 +25,6 @@
             "displayName": false
           }
         ]
-      ]
-    },
-    "development": {
-      "plugins": [
-        "transform-class-properties",
-        "transform-es2015-classes"
       ]
     }
   }
