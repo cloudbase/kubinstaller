@@ -19,7 +19,7 @@ limitations under the License.
 import alt from '../alt'
 import Node from '../models/Node'
 import NodesStore from '../stores/NodesStore'
-import PersistenceManager from '../utils/PersistenceManager'
+import PersistenceManager from '../ipc/PersistenceManager'
 
 class NodesActions {
   updateSelection(value: string | Array<number>) {

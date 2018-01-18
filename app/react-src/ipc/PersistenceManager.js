@@ -16,5 +16,14 @@ limitations under the License.
 
 // @flow
 
-require('./Persistence')
-require('./Accounts')
+import Ipc from './Ipc'
+
+export default class PersistenceManager {
+  static save(channel: string, data: any): Promise<any> {
+    return Ipc.send(`save-${channel}`, data)
+  }
+
+  static load(channel: string): Promise<any> {
+    return Ipc.send(`load-${channel}`)
+  }
+}

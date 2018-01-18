@@ -16,5 +16,14 @@ limitations under the License.
 
 // @flow
 
-require('./Persistence')
-require('./Accounts')
+import Ipc from './Ipc'
+
+export default class AccountsManager {
+  static set(account: string, password: string): Promise<any> {
+    return Ipc.send('set-password', { account, password })
+  }
+
+  static get(account: string): Promise<any> {
+    return Ipc.send('get-password', { account })
+  }
+}

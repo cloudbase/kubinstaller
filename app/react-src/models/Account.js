@@ -16,5 +16,12 @@ limitations under the License.
 
 // @flow
 
-require('./Persistence')
-require('./Accounts')
+export default class Account {
+  account: string
+  password: string
+
+  constructor(account: string, password: string) {
+    this.account = account
+    this.password = password
+  }
+}

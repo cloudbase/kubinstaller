@@ -18,28 +18,18 @@ limitations under the License.
 
 import { ipcRenderer } from 'electron'
 
-class Ipc {
-  static send(channel: string, data: any, errorMessage: string): Promise<any> {
+export default class Ipc {
+  static send(channel: string, data?: any): Promise<any> {
     return new Promise((resolve, reject) => {
       ipcRenderer.send(channel, data)
       ipcRenderer.once(channel, (event, arg) => {
         if (arg.status === 'error') {
-          console.error(errorMessage, arg) // eslint-disable-line no-console
+          console.error(`Sending to channel ${channel} failed!`, arg) // eslint-disable-line no-console
           reject(arg)
         } else {
           resolve(arg)
         }
       })
     })
-  }
-}
-
-export default class PersistenceManager {
-  static save(channel: string, data: any): Promise<any> {
-    return Ipc.send(`save-${channel}`, data, `Saving to channel 'save-${channel}' failed!`)
-  }
-
-  static load(channel: string): Promise<any> {
-    return Ipc.send(`load-${channel}`, null, `Loading from channel 'load-${channel}' failed!`)
   }
 }

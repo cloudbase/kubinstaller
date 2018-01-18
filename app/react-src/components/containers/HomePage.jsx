@@ -24,6 +24,7 @@ import OptionsStore from '../../stores/OptionsStore'
 import OptionsActions from '../../actions/OptionsActions'
 import NodesStore from '../../stores/NodesStore'
 import NodesActions from '../../actions/NodesActions'
+import AccountsStore from '../../stores/AccountsStore'
 import OptionsPanel from '../organisms/OptionsPanel'
 import NodesPanel from '../organisms/NodesPanel'
 import MainTemplate from './MainTemplate'
@@ -60,6 +61,7 @@ class HomePage extends React.Component<Props> {
   static getPropsFromStores() {
     let optionsStore = OptionsStore.getState()
     let nodesStore = NodesStore.getState()
+    let accountsStore = AccountsStore.getState()
     return {
       networkDrivers: optionsStore.networkDrivers,
       selectedNetworkDriver: optionsStore.selectedNetworkDriver,
@@ -72,6 +74,7 @@ class HomePage extends React.Component<Props> {
       registryToggled: optionsStore.registryToggled,
       nodes: nodesStore.nodes,
       selectedNodes: nodesStore.selectedNodes,
+      accounts: accountsStore.accounts,
     }
   }
 
