@@ -40,6 +40,7 @@ import TextEllipsis from '../atoms/TextEllipsis'
 const PanelStyled = styled(Panel)`
   width: 100%;
   min-width: 565px;
+  padding-bottom: 32px;
 `
 const FloatingActionButtonStyled = styled(FloatingActionButton)`
   position: absolute;
@@ -71,7 +72,7 @@ type Props = {
 class NodesPanel extends React.Component<Props> {
   render() {
     return (
-      <PanelStyled title="Nodes" noPadding>
+      <PanelStyled title="Nodes">
         <FloatingActionButtonStyled
           onClick={() => { this.props.onNewNodeClick() }}
         >

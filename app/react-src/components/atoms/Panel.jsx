@@ -31,15 +31,13 @@ const Title = styled.div`
   font-size: 20px;
   border-bottom: 1px solid ${MuiTheme.palette.borderColor};
 `
-const Body = styled.div`
-  ${props => props.noPadding ? '' : 'padding: 22px 20px;'}
-`
+const Body = styled.div``
 
 type Props = {
   children: React.Node,
   title: string,
   className: string,
-  noPadding?: boolean,
+  panelBodyStyle?: any,
 }
 
 class Panel extends React.Component<Props> {
@@ -47,7 +45,7 @@ class Panel extends React.Component<Props> {
     return (
       <Wrapper className={this.props.className}>
         <Title>{this.props.title}</Title>
-        <Body noPadding={this.props.noPadding}>{this.props.children}</Body>
+        <Body style={this.props.panelBodyStyle}>{this.props.children}</Body>
       </Wrapper>
     )
   }

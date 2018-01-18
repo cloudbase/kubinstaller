@@ -91,7 +91,7 @@ type Props = {
 class OptionsPanel extends React.Component<Props> {
   render() {
     return (
-      <PanelStyled title="Options">
+      <PanelStyled title="Options" panelBodyStyle={{ padding: '22px 20px' }}>
         <NetworkDriverWrapper>
           <NetworkDriverLabel>Network Driver</NetworkDriverLabel>
           <DropDownMenu
