@@ -35,6 +35,7 @@ import ActionDelete from 'material-ui/svg-icons/action/delete'
 import Node from '../../models/Node'
 import MuiTheme from '../../utils/MuiTheme'
 import Panel from '../atoms/Panel'
+import TextEllipsis from '../atoms/TextEllipsis'
 
 const PanelStyled = styled(Panel)`
   width: 100%;
@@ -108,10 +109,10 @@ class NodesPanel extends React.Component<Props> {
                 selected={this.props.selectedNodes.findIndex(rowIndex => rowIndex === i) > -1}
               >
                 <TableRowColumn>
-                  {node.host}
+                  <TextEllipsis>{node.host}</TextEllipsis>
                 </TableRowColumn>
                 <TableRowColumn>
-                  {node.os}
+                  <TextEllipsis>{node.os}</TextEllipsis>
                 </TableRowColumn>
                 <TableRowColumn>
                   <Toggle
