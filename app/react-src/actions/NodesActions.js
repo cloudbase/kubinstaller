@@ -18,6 +18,8 @@ limitations under the License.
 
 import alt from '../alt'
 import Node from '../models/Node'
+import NodesStore from '../stores/NodesStore'
+import PersistenceManager from '../utils/PersistenceManager'
 
 class NodesActions {
   updateSelection(value: string | Array<number>) {
@@ -34,6 +36,27 @@ class NodesActions {
 
   newNode() {
     return true
+  }
+
+  save() {
+    return { promise: PersistenceManager.save('nodes', NodesStore.getState()) }
+  }
+
+  load() {
+    return {
+      promise: PersistenceManager.load('nodes').then(
+        data => { this.loadFulfilled(data) },
+        error => { this.loadRejected(error) }
+      ),
+    }
+  }
+
+  loadFulfilled(data: NodesStore) {
+    return data || true
+  }
+
+  loadRejected(error) {
+    return error || true
   }
 }
 

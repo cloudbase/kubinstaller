@@ -30,27 +30,12 @@ const updateArray = (array: Array<Node>, id: string, callback: (node: Node) => N
 }
 
 class NodesStore {
-  nodes: Array<Node>
-  selectedNodes: Array<number>
+  nodes: Node[]
+  selectedNodes: number[]
   bindActions: (actions: NodesActions) => void
 
   constructor() {
-    this.nodes = [
-      new Node({
-        id: 'node-1',
-        host: '192.168.10.101',
-        os: 'Windows',
-        api: false,
-        enabled: true,
-      }),
-      new Node({
-        id: 'node-2',
-        host: '192.168.10.102',
-        os: 'Linux',
-        api: true,
-        enabled: false,
-      })]
-
+    this.nodes = []
     this.selectedNodes = []
 
     this.bindActions(NodesActions)
@@ -89,6 +74,11 @@ class NodesStore {
       enabled: false,
     })
     this.nodes.push(newNode)
+  }
+
+  onLoadFulfilled(data: NodesStore) {
+    this.nodes = data.nodes
+    this.selectedNodes = data.selectedNodes
   }
 }
 

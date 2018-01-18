@@ -75,6 +75,10 @@ class HomePage extends React.Component<Props> {
     }
   }
 
+  componentWillMount() {
+    NodesActions.load()
+  }
+
   handleNetworkDriverChange(name) {
     OptionsActions.updateSelectedNetworkDriver(name)
   }
@@ -109,18 +113,22 @@ class HomePage extends React.Component<Props> {
 
   handleNodeSelection(selection) {
     NodesActions.updateSelection(selection)
+    NodesActions.save()
   }
 
   handleNodeApiToggle(node: Node, toggled) {
     NodesActions.nodeApiToggle(node, toggled)
+    NodesActions.save()
   }
 
   handleNodeEnabledToggle(node, toggled) {
     NodesActions.nodeEnabledToggle(node, toggled)
+    NodesActions.save()
   }
 
   handleNewNodeClick() {
     NodesActions.newNode()
+    NodesActions.save()
   }
 
   render() {
