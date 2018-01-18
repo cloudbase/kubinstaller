@@ -43,4 +43,14 @@ export default class Node {
     })
     return newNode
   }
+
+  static random(): Node {
+    return new Node({
+      id: `node-${Math.random() * 100}`,
+      host: `192.168.10.${Math.floor(Math.random() * 256)}`,
+      os: ['Windows', 'Linux'][Math.floor(Math.random() * 2)],
+      api: [true, false][Math.floor(Math.random() * 2)],
+      enabled: [true, false][Math.floor(Math.random() * 2)],
+    })
+  }
 }

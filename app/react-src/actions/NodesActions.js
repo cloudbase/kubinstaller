@@ -58,6 +58,10 @@ class NodesActions {
   loadRejected(error) {
     return error || true
   }
+
+  deleteSelection() {
+    return true
+  }
 }
 
 export default alt.createActions(NodesActions)

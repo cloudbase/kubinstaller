@@ -66,19 +66,18 @@ class NodesStore {
   }
 
   onNewNode() {
-    let newNode = new Node({
-      id: `node-${Math.random() * 100}`,
-      host: '192.168.10.102',
-      os: 'Windows',
-      api: true,
-      enabled: false,
-    })
-    this.nodes.push(newNode)
+    this.nodes = [...this.nodes, Node.random()]
+    this.selectedNodes = []
   }
 
   onLoadFulfilled(data: NodesStore) {
     this.nodes = data.nodes
     this.selectedNodes = data.selectedNodes
+  }
+
+  onDeleteSelection() {
+    this.nodes = this.nodes.filter((_, i: number) => this.selectedNodes.indexOf(i) === -1)
+    this.selectedNodes = []
   }
 }
 

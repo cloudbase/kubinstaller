@@ -134,6 +134,11 @@ class HomePage extends React.Component<Props> {
     NodesActions.save()
   }
 
+  handleDeleteSelection() {
+    NodesActions.deleteSelection()
+    NodesActions.save()
+  }
+
   render() {
     return (
       <MainTemplate
@@ -147,6 +152,7 @@ class HomePage extends React.Component<Props> {
                 onNodeApiToggle={(node: Node, toggled) => { this.handleNodeApiToggle(node, toggled) }}
                 onNodeEnabledToggle={(node, toggled) => { this.handleNodeEnabledToggle(node, toggled) }}
                 onNewNodeClick={() => { this.handleNewNodeClick() }}
+                onDeleteSelection={() => { this.handleDeleteSelection() }}
               />
               <OptionsPanel
                 networkDrivers={this.props.networkDrivers}

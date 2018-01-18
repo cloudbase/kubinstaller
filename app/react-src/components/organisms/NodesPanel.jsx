@@ -64,6 +64,7 @@ type Props = {
   onNodeApiToggle: (node: Node, toggled: boolean) => void,
   onNodeEnabledToggle: (node: Node, toggled: boolean) => void,
   onNewNodeClick: () => void,
+  onDeleteSelection: () => void,
 }
 
 class NodesPanel extends React.Component<Props> {
@@ -78,7 +79,11 @@ class NodesPanel extends React.Component<Props> {
         {this.props.selectedNodes.length > 0 ? (
           <SelectionInfo>
             <SelectionInfoText>{this.props.selectedNodes.length} item{this.props.selectedNodes.length > 1 ? 's' : ''} selected</SelectionInfoText>
-            <ActionDelete color={MuiTheme.palette.accent3Color} style={{ cursor: 'pointer' }} />
+            <ActionDelete
+              color={MuiTheme.palette.accent3Color}
+              style={{ cursor: 'pointer' }}
+              onClick={this.props.onDeleteSelection}
+            />
           </SelectionInfo>
         ) : null}
         <Table
@@ -102,8 +107,12 @@ class NodesPanel extends React.Component<Props> {
                 key={node.id}
                 selected={this.props.selectedNodes.findIndex(rowIndex => rowIndex === i) > -1}
               >
-                <TableRowColumn>{node.host}</TableRowColumn>
-                <TableRowColumn>{node.os}</TableRowColumn>
+                <TableRowColumn>
+                  {node.host}
+                </TableRowColumn>
+                <TableRowColumn>
+                  {node.os}
+                </TableRowColumn>
                 <TableRowColumn>
                   <Toggle
                     toggled={node.api}
