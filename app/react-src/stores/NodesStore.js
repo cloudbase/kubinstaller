@@ -51,9 +51,9 @@ class NodesStore {
     }
   }
 
-  onNodeApiToggle(options: { node: Node, toggled: boolean, }) {
+  onNodeMasterToggle(options: { node: Node, toggled: boolean, }) {
     this.nodes = updateArray(this.nodes, options.node.id, (node: Node) => {
-      node.api = options.toggled
+      node.master = options.toggled
       return node
     })
   }

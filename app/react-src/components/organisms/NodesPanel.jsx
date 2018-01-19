@@ -63,7 +63,7 @@ type Props = {
   nodes: Array<Node>,
   selectedNodes: Array<number>,
   onNodeSelection: () => void,
-  onNodeApiToggle: (node: Node, toggled: boolean) => void,
+  onNodeMasterToggle: (node: Node, toggled: boolean) => void,
   onNodeEnabledToggle: (node: Node, toggled: boolean) => void,
   onNewNodeClick: () => void,
   onDeleteSelection: () => void,
@@ -98,7 +98,7 @@ class NodesPanel extends React.Component<Props> {
             <TableRow>
               <TableHeaderColumn>Host</TableHeaderColumn>
               <TableHeaderColumn>OS</TableHeaderColumn>
-              <TableHeaderColumn>API</TableHeaderColumn>
+              <TableHeaderColumn>Master</TableHeaderColumn>
               <TableHeaderColumn>Node</TableHeaderColumn>
               <TableHeaderColumn>Credentials</TableHeaderColumn>
             </TableRow>
@@ -117,9 +117,9 @@ class NodesPanel extends React.Component<Props> {
                 </TableRowColumn>
                 <TableRowColumn>
                   <Toggle
-                    toggled={node.api}
+                    toggled={node.master}
                     onClick={e => { e.stopPropagation() }}
-                    onToggle={(e, toggled: boolean) => { this.props.onNodeApiToggle(node, toggled) }}
+                    onToggle={(e, toggled: boolean) => { this.props.onNodeMasterToggle(node, toggled) }}
                   />
                 </TableRowColumn>
                 <TableRowColumn>

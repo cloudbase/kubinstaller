@@ -26,7 +26,7 @@ class NodesActions {
     return { value }
   }
 
-  nodeApiToggle(node: Node, toggled: boolean) {
+  nodeMasterToggle(node: Node, toggled: boolean) {
     return { node, toggled }
   }
 

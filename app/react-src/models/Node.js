@@ -20,16 +20,16 @@ export default class Node {
   id: string
   host: string
   os: string
-  api: boolean
+  master: boolean
   enabled: boolean
 
   constructor(props: {
-      id: string, host: string, os: string, api: boolean, enabled: boolean,
+    id: string, host: string, os: string, master: boolean, enabled: boolean,
   }) {
     this.id = props.id
     this.host = props.host
     this.os = props.os
-    this.api = props.api
+    this.master = props.master
     this.enabled = props.enabled
   }
 
@@ -38,7 +38,7 @@ export default class Node {
       id: node.id,
       host: node.host,
       os: node.os,
-      api: node.api,
+      master: node.master,
       enabled: node.enabled,
     })
     return newNode
@@ -49,7 +49,7 @@ export default class Node {
       id: `node-${Math.random() * 100}`,
       host: `192.168.10.${Math.floor(Math.random() * 256)}`,
       os: ['Windows', 'Linux'][Math.floor(Math.random() * 2)],
-      api: [true, false][Math.floor(Math.random() * 2)],
+      master: [true, false][Math.floor(Math.random() * 2)],
       enabled: [true, false][Math.floor(Math.random() * 2)],
     })
   }
