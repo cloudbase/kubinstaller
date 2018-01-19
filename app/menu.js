@@ -1,8 +1,6 @@
 // @flow
 import { app, Menu, shell, BrowserWindow } from 'electron'
 
-require('./node-src')
-
 export default class MenuBuilder {
   mainWindow: BrowserWindow
 

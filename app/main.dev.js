@@ -12,6 +12,7 @@
  */
 import { app, BrowserWindow } from 'electron'
 import MenuBuilder from './menu'
+import './node-src'
 
 let mainWindow = null
 

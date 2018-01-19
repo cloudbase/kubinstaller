@@ -16,5 +16,5 @@ limitations under the License.
 
 // @flow
 
-require('./Persistence')
-require('./Accounts')
+import './Persistence'
+import './Accounts'

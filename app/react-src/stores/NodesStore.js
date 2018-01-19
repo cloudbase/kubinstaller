@@ -23,9 +23,9 @@ import Node from '../models/Node'
 const updateArray = (array: Array<Node>, id: string, callback: (node: Node) => Node) => {
   return array.map((node: Node) => {
     if (node.id === id) {
-      return Node.clone(callback(node))
+      return new Node(callback(node))
     }
-    return Node.clone(node)
+    return new Node(node)
   })
 }
 

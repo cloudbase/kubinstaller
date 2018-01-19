@@ -33,17 +33,6 @@ export default class Node {
     this.enabled = props.enabled
   }
 
-  static clone(node: Node): Node {
-    let newNode = new Node({
-      id: node.id,
-      host: node.host,
-      os: node.os,
-      master: node.master,
-      enabled: node.enabled,
-    })
-    return newNode
-  }
-
   static random(): Node {
     return new Node({
       id: `node-${Math.random() * 100}`,
