@@ -1,6 +1,8 @@
 {
   "name": "kubinstaller",
   "productName": "KubInstaller",
+  "author": "Cloudbase Solutions SRL",
+  "description": "",
   "version": "0.0.1",
   "main": "./main.prod.js",
   "scripts": {
