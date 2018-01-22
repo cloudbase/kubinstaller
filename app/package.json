@@ -5,6 +5,7 @@
   "description": "",
   "version": "0.0.1",
   "main": "./main.prod.js",
+  "homepage": "https://github.com/smiclea/kubinstaller",
   "scripts": {
     "electron-rebuild": "node -r babel-register ../internals/scripts/ElectronRebuild.js",
     "postinstall": "npm run electron-rebuild"

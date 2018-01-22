@@ -22,6 +22,7 @@ import { AppContainer } from 'react-hot-loader'
 
 import App from './components/App'
 import HomePage from './components/containers/HomePage'
+import Splash from './components/organisms/Splash'
 
 let history = createHashHistory()
 const renderApp = () => {
@@ -30,7 +31,8 @@ const renderApp = () => {
       <App>
         <Router history={history}>
           <Switch>
-            <Route path="/" component={HomePage} />
+            <Route path="/" component={HomePage} exact />
+            <Route path="/splash" component={Splash} />
           </Switch>
         </Router>
       </App>

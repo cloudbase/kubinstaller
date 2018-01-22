@@ -42,6 +42,17 @@ type Props = {
 }
 
 class MainTemplate extends React.Component<Props> {
+  componentWillMount() {
+    if (!document.body) {
+      return
+    }
+
+    // we are setting this 'universal' style on component mount so it doesn't interfere with
+    // splash screen's transparent background
+    document.body.style.background = '#EEF0F3'
+    document.body.style.padding = '60px 48px 48px 48px'
+  }
+
   render() {
     return (
       <Wrapper>
