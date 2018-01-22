@@ -34,8 +34,8 @@ class OptionsStore {
   bindActions: (actions: OptionsActions) => void
 
   constructor() {
-    this.networkDrivers = [new NetworkDriver({ name: 'OVS' }), new NetworkDriver({ name: 'Others' })]
-    this.selectedNetworkDriver = 'OVS'
+    this.networkDrivers = [new NetworkDriver({ name: 'Open vSwitch' }), new NetworkDriver({ name: 'Others' })]
+    this.selectedNetworkDriver = this.networkDrivers[0].name
     this.clusterNetworkStartIp = ''
     this.clusterNetworkEndIp = ''
     this.serviceNetworkStartIp = ''

@@ -18,34 +18,34 @@ limitations under the License.
 
 import * as React from 'react'
 import styled from 'styled-components'
+import FlatButton from 'material-ui/FlatButton'
+import RaisedButton from 'material-ui/RaisedButton'
 
 const Wrapper = styled.div`
-  background: white;
-  position: relative;
-  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 53px;
+  min-width: 890px;
+  background: #353746;
+  padding: 22px 28px;
 `
-const Title = styled.div`
-  padding: 22px 20px;
-  font-size: 20px;
-`
-const Body = styled.div``
+const RaisedButtons = styled.div``
+const FlatButtons = styled.div``
 
-type Props = {
-  children: React.Node,
-  title: string,
-  className: string,
-  panelBodyStyle?: any,
-}
-
-class Panel extends React.Component<Props> {
+class Footer extends React.Component<any> {
   render() {
     return (
-      <Wrapper className={this.props.className}>
-        <Title>{this.props.title}</Title>
-        <Body style={this.props.panelBodyStyle}>{this.props.children}</Body>
+      <Wrapper>
+        <FlatButtons>
+          <FlatButton label="CLI" style={{ marginRight: '32px', color: 'white' }} />
+          <FlatButton label="DASHBOARD" style={{ color: 'white' }} />
+        </FlatButtons>
+        <RaisedButtons>
+          <RaisedButton label="DEPLOY" primary style={{ width: '164px' }} />
+        </RaisedButtons>
       </Wrapper>
     )
   }
 }
 
-export default Panel
+export default Footer

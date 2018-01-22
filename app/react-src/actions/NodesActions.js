@@ -26,11 +26,11 @@ class NodesActions {
     return { value }
   }
 
-  nodeMasterToggle(node: Node, toggled: boolean) {
+  nodeIsMasterToggle(node: Node, toggled: boolean) {
     return { node, toggled }
   }
 
-  nodeEnabledToggle(node: Node, toggled: boolean) {
+  nodeIsNodeToggle(node: Node, toggled: boolean) {
     return { node, toggled }
   }
 

@@ -25,14 +25,10 @@ const flatButton = {
 const raisedButton = {
   textColor: palette.primary1Color,
 }
-const dropDownMenu = {
-  labelColor: 'red',
-}
 
 export default {
   textField,
   palette,
   flatButton,
   raisedButton,
-  dropDownMenu,
 }

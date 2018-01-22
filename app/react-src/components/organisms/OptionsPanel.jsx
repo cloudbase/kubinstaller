@@ -31,14 +31,10 @@ import Panel from '../atoms/Panel'
 const PanelStyled = styled(Panel)`
   ${StyleHelper.exactWidth('300px')}
 `
-const NetworkDriverWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: -18px;
-  margin-right: -18px;
+const NetworkDriverWrapper = styled.div``
+const NetworkDriverLabel = styled.div`
+  margin-bottom: 24px;
 `
-const NetworkDriverLabel = styled.div``
 const IpRanges = styled.div`
   margin: 18px 0;
 `
@@ -93,16 +89,19 @@ class OptionsPanel extends React.Component<Props> {
     return (
       <PanelStyled title="Options" panelBodyStyle={{ padding: '22px 20px' }}>
         <NetworkDriverWrapper>
-          <NetworkDriverLabel>Network Driver</NetworkDriverLabel>
-          <DropDownMenu
-            value={this.props.selectedNetworkDriver}
-            labelStyle={{ color: MuiTheme.palette.primary1Color }}
-            onChange={(e, i, value: NetworkDriver) => { this.props.onNetworkDriverChange(value) }}
-          >
-            {this.props.networkDrivers.map(driver => (
-              <MenuItem key={driver.name} value={driver.name} primaryText={driver.name} />
-            ))}
-          </DropDownMenu>
+          <NetworkDriverLabel>Network</NetworkDriverLabel>
+          <Group>
+            <GroupLabel>Driver</GroupLabel>
+            <DropDownMenu
+              style={{ marginLeft: '-24px' }}
+              value={this.props.selectedNetworkDriver}
+              onChange={(e, i, value: NetworkDriver) => { this.props.onNetworkDriverChange(value) }}
+            >
+              {this.props.networkDrivers.map(driver => (
+                <MenuItem key={driver.name} value={driver.name} primaryText={driver.name} />
+              ))}
+            </DropDownMenu>
+          </Group>
         </NetworkDriverWrapper>
         <IpRanges>
           <Group>

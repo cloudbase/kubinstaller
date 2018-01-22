@@ -20,17 +20,17 @@ export default class Node {
   id: string
   host: string
   os: string
-  master: boolean
-  enabled: boolean
+  isMaster: boolean
+  isNode: boolean
 
   constructor(props: {
-    id: string, host: string, os: string, master: boolean, enabled: boolean,
+    id: string, host: string, os: string, isMaster: boolean, isNode: boolean,
   }) {
     this.id = props.id
     this.host = props.host
     this.os = props.os
-    this.master = props.master
-    this.enabled = props.enabled
+    this.isMaster = props.isMaster
+    this.isNode = props.isNode
   }
 
   static random(): Node {
@@ -38,8 +38,8 @@ export default class Node {
       id: `node-${Math.random() * 100}`,
       host: `192.168.10.${Math.floor(Math.random() * 256)}`,
       os: ['Windows', 'Linux'][Math.floor(Math.random() * 2)],
-      master: [true, false][Math.floor(Math.random() * 2)],
-      enabled: [true, false][Math.floor(Math.random() * 2)],
+      isMaster: [true, false][Math.floor(Math.random() * 2)],
+      isNode: [true, false][Math.floor(Math.random() * 2)],
     })
   }
 }

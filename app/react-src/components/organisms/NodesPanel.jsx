@@ -29,8 +29,8 @@ import {
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import Toggle from 'material-ui/Toggle'
-import FlatButton from 'material-ui/FlatButton'
 import ActionDelete from 'material-ui/svg-icons/action/delete'
+import MoreVert from 'material-ui/svg-icons/navigation/more-vert'
 
 import Node from '../../models/Node'
 import MuiTheme from '../../utils/MuiTheme'
@@ -40,12 +40,12 @@ import TextEllipsis from '../atoms/TextEllipsis'
 const PanelStyled = styled(Panel)`
   width: 100%;
   min-width: 565px;
-  padding-bottom: 32px;
+  padding-bottom: 106px;
 `
 const FloatingActionButtonStyled = styled(FloatingActionButton)`
   position: absolute;
-  bottom: -28px;
-  left: 28px;
+  bottom: 24px;
+  right: 24px;
 `
 const SelectionInfo = styled.div`
   display: flex;
@@ -58,26 +58,27 @@ const SelectionInfoText = styled.div`
   font-size: 12px;
   color: ${MuiTheme.palette.secondaryTextColor};
 `
+const MoreVertStyled = styled(MoreVert)`
+  cursor: pointer;
+`
 
 type Props = {
   nodes: Array<Node>,
   selectedNodes: Array<number>,
   onNodeSelection: () => void,
-  onNodeMasterToggle: (node: Node, toggled: boolean) => void,
-  onNodeEnabledToggle: (node: Node, toggled: boolean) => void,
+  onNodeIsMasterToggle: (node: Node, toggled: boolean) => void,
+  onNodeIsNodeToggle: (node: Node, toggled: boolean) => void,
   onNewNodeClick: () => void,
   onDeleteSelection: () => void,
 }
+
+
+const colStyles = [{ width: '20%' }, { width: '30%' }, { width: '20%' }, { width: '20%' }, { width: '32px' }]
 
 class NodesPanel extends React.Component<Props> {
   render() {
     return (
       <PanelStyled title="Nodes">
-        <FloatingActionButtonStyled
-          onClick={() => { this.props.onNewNodeClick() }}
-        >
-          <ContentAdd />
-        </FloatingActionButtonStyled>
         {this.props.selectedNodes.length > 0 ? (
           <SelectionInfo>
             <SelectionInfoText>{this.props.selectedNodes.length} item{this.props.selectedNodes.length > 1 ? 's' : ''} selected</SelectionInfoText>
@@ -92,15 +93,15 @@ class NodesPanel extends React.Component<Props> {
           multiSelectable
           enableSelectAll
           onRowSelection={this.props.onNodeSelection}
-          height="336px"
+          height="360px"
         >
           <TableHeader>
             <TableRow>
-              <TableHeaderColumn>Host</TableHeaderColumn>
-              <TableHeaderColumn>OS</TableHeaderColumn>
-              <TableHeaderColumn>Master</TableHeaderColumn>
-              <TableHeaderColumn>Node</TableHeaderColumn>
-              <TableHeaderColumn>Credentials</TableHeaderColumn>
+              <TableHeaderColumn style={colStyles[0]}>Host</TableHeaderColumn>
+              <TableHeaderColumn style={colStyles[1]}>OS</TableHeaderColumn>
+              <TableHeaderColumn style={colStyles[2]}>Master</TableHeaderColumn>
+              <TableHeaderColumn style={colStyles[3]}>Node</TableHeaderColumn>
+              <TableHeaderColumn style={colStyles[4]} />
             </TableRow>
           </TableHeader>
           <TableBody deselectOnClickaway={false}>
@@ -109,37 +110,40 @@ class NodesPanel extends React.Component<Props> {
                 key={node.id}
                 selected={this.props.selectedNodes.findIndex(rowIndex => rowIndex === i) > -1}
               >
-                <TableRowColumn>
+                <TableRowColumn style={colStyles[0]}>
                   <TextEllipsis>{node.host}</TextEllipsis>
                 </TableRowColumn>
-                <TableRowColumn>
+                <TableRowColumn style={colStyles[1]}>
                   <TextEllipsis>{node.os}</TextEllipsis>
                 </TableRowColumn>
-                <TableRowColumn>
+                <TableRowColumn style={colStyles[2]}>
                   <Toggle
-                    toggled={node.master}
+                    toggled={node.isMaster}
                     onClick={e => { e.stopPropagation() }}
-                    onToggle={(e, toggled: boolean) => { this.props.onNodeMasterToggle(node, toggled) }}
+                    onToggle={(e, toggled: boolean) => { this.props.onNodeIsMasterToggle(node, toggled) }}
                   />
                 </TableRowColumn>
-                <TableRowColumn>
+                <TableRowColumn style={colStyles[3]}>
                   <Toggle
-                    toggled={node.enabled}
+                    toggled={node.isNode}
                     onClick={e => { e.stopPropagation() }}
-                    onToggle={(e, toggled) => { this.props.onNodeEnabledToggle(node, toggled) }}
+                    onToggle={(e, toggled) => { this.props.onNodeIsNodeToggle(node, toggled) }}
                   />
                 </TableRowColumn>
-                <TableRowColumn>
-                  <FlatButton
-                    label="ADD"
-                    primary
+                <TableRowColumn style={colStyles[4]}>
+                  <MoreVertStyled
                     onClick={e => { e.stopPropagation() }}
+                    color="#4C4D51"
                   />
                 </TableRowColumn>
               </TableRow>
             )))}
           </TableBody>
         </Table>
+        <FloatingActionButtonStyled
+          onClick={() => { this.props.onNewNodeClick() }}
+        ><ContentAdd />
+        </FloatingActionButtonStyled>
       </PanelStyled>
     )
   }

@@ -25,7 +25,11 @@ import StyleHelper from '../../utils/StyleHelper'
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 52px;
+  background: #DFE3E9;
+  padding: 36px 24px;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.26);
+  position: relative;
+  z-index: 1;
 `
 const Logo = styled.div`
   ${StyleHelper.exactSize('77px')}
@@ -35,7 +39,7 @@ const Text = styled.div`
   margin-left: 12px;
 `
 const Name = styled.div`
-  font-size: 41px;
+  font-size: 47px;
   display: flex;
 `
 const NameLight = styled.div`
@@ -43,9 +47,6 @@ const NameLight = styled.div`
 `
 const NameBold = styled.div`
   ${StyleHelper.fontWeights.medium};
-`
-const Description = styled.div`
-  color: #5D5F6C;
 `
 
 type Props = {}
@@ -59,7 +60,6 @@ class Header extends React.Component<Props> {
             <NameLight>kub</NameLight>
             <NameBold>installer</NameBold>
           </Name>
-          <Description>The Kubernetes Cluster Installer</Description>
         </Text>
       </Wrapper>
     )

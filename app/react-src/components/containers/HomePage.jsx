@@ -119,13 +119,13 @@ class HomePage extends React.Component<Props> {
     NodesActions.save()
   }
 
-  handleNodeMasterToggle(node: Node, toggled) {
-    NodesActions.nodeMasterToggle(node, toggled)
+  handleNodeIsMasterToggle(node: Node, toggled) {
+    NodesActions.nodeIsMasterToggle(node, toggled)
     NodesActions.save()
   }
 
-  handleNodeEnabledToggle(node, toggled) {
-    NodesActions.nodeEnabledToggle(node, toggled)
+  handleNodeIsNodeToggle(node, toggled) {
+    NodesActions.nodeIsNodeToggle(node, toggled)
     NodesActions.save()
   }
 
@@ -149,8 +149,8 @@ class HomePage extends React.Component<Props> {
                 nodes={this.props.nodes}
                 selectedNodes={this.props.selectedNodes}
                 onNodeSelection={selection => { this.handleNodeSelection(selection) }}
-                onNodeMasterToggle={(node: Node, toggled) => { this.handleNodeMasterToggle(node, toggled) }}
-                onNodeEnabledToggle={(node, toggled) => { this.handleNodeEnabledToggle(node, toggled) }}
+                onNodeIsMasterToggle={(node: Node, toggled) => { this.handleNodeIsMasterToggle(node, toggled) }}
+                onNodeIsNodeToggle={(node, toggled) => { this.handleNodeIsNodeToggle(node, toggled) }}
                 onNewNodeClick={() => { this.handleNewNodeClick() }}
                 onDeleteSelection={() => { this.handleDeleteSelection() }}
               />

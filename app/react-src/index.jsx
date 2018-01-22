@@ -22,7 +22,7 @@ import { AppContainer } from 'react-hot-loader'
 
 import App from './components/App'
 import HomePage from './components/containers/HomePage'
-import Splash from './components/organisms/Splash'
+import Splash from './components/molecules/Splash'
 
 let history = createHashHistory()
 const renderApp = () => {

@@ -51,16 +51,16 @@ class NodesStore {
     }
   }
 
-  onNodeMasterToggle(options: { node: Node, toggled: boolean, }) {
+  onNodeIsMasterToggle(options: { node: Node, toggled: boolean, }) {
     this.nodes = updateArray(this.nodes, options.node.id, (node: Node) => {
-      node.master = options.toggled
+      node.isMaster = options.toggled
       return node
     })
   }
 
-  onNodeEnabledToggle(options: { node: Node, toggled: boolean, }) {
+  onNodeIsNodeToggle(options: { node: Node, toggled: boolean, }) {
     this.nodes = updateArray(this.nodes, options.node.id, (node: Node) => {
-      node.enabled = options.toggled
+      node.isNode = options.toggled
       return node
     })
   }
