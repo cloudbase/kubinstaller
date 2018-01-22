@@ -18,8 +18,9 @@ limitations under the License.
 
 import React from 'react'
 import styled from 'styled-components'
-import connectToStores from '../../utils/connectToStores'
+import Dialog from 'material-ui/Dialog'
 
+import connectToStores from '../../utils/connectToStores'
 import OptionsStore from '../../stores/OptionsStore'
 import OptionsActions from '../../actions/OptionsActions'
 import NodesStore from '../../stores/NodesStore'
@@ -29,6 +30,7 @@ import OptionsPanel from '../organisms/OptionsPanel'
 import NodesPanel from '../organisms/NodesPanel'
 import MainTemplate from './MainTemplate'
 import Node from '../../models/Node'
+import NodeComponent from '../organisms/Node'
 
 const Wrapper = styled.div``
 const Panels = styled.div`
@@ -53,7 +55,11 @@ type Props = {
   selectedNodes: Array<number>,
 }
 
-class HomePage extends React.Component<Props> {
+type State = {
+  showNodeModal: boolean,
+}
+
+class HomePage extends React.Component<Props, State> {
   static getStores() {
     return [OptionsStore, NodesStore]
   }
@@ -76,6 +82,10 @@ class HomePage extends React.Component<Props> {
       selectedNodes: nodesStore.selectedNodes,
       accounts: accountsStore.accounts,
     }
+  }
+
+  state = {
+    showNodeModal: false,
   }
 
   componentWillMount() {
@@ -130,8 +140,7 @@ class HomePage extends React.Component<Props> {
   }
 
   handleNewNodeClick() {
-    NodesActions.newNode()
-    NodesActions.save()
+    this.setState({ showNodeModal: true })
   }
 
   handleDeleteSelection() {
@@ -174,6 +183,13 @@ class HomePage extends React.Component<Props> {
                 onRegistryToggle={v => { this.handleRegistryToggle(v) }}
               />
             </Panels>
+            <Dialog
+              modal
+              open={this.state.showNodeModal}
+              title="Add a new Kubernetes Node"
+            >
+              <NodeComponent />
+            </Dialog>
           </Wrapper>
       )}
       />

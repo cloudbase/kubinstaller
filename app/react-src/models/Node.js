@@ -23,14 +23,14 @@ export default class Node {
   isMaster: boolean
   isNode: boolean
 
-  constructor(props: {
-    id: string, host: string, os: string, isMaster: boolean, isNode: boolean,
-  }) {
-    this.id = props.id
-    this.host = props.host
-    this.os = props.os
-    this.isMaster = props.isMaster
-    this.isNode = props.isNode
+  constructor(props?: {
+    id?: string, host?: string, os?: string, isMaster?: boolean, isNode?: boolean,
+  } | Node) {
+    this.id = (props && props.id) || `node-${new Date().getTime()}`
+    this.host = (props && props.host) || ''
+    this.os = (props && props.os) || ''
+    this.isMaster = (props && props.isMaster) || false
+    this.isNode = (props && props.isNode) || false
   }
 
   static random(): Node {

@@ -33,3 +33,7 @@ declare module 'material-ui/DropDownMenu' {
 declare module 'material-ui/TextField' {
   declare module.exports: any;
 }
+
+declare module 'material-ui/Dialog' {
+  declare module.exports: any;
+}
