@@ -25,10 +25,18 @@ const flatButton = {
 const raisedButton = {
   textColor: palette.primary1Color,
 }
+const checkbox = {
+  boxColor: '#90919B',
+}
+const radioButton = {
+  borderColor: '#90919B',
+}
 
 export default {
   textField,
   palette,
   flatButton,
   raisedButton,
+  checkbox,
+  radioButton,
 }

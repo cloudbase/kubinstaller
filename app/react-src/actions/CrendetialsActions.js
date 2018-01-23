@@ -17,35 +17,35 @@ limitations under the License.
 // @flow
 
 import alt from '../alt'
-import AccountsManager from '../ipc/AccountsManager'
+import CrendetialsManager from '../ipc/CrendetialsManager'
 
-class AccountsActions {
-  setPassword(account: string, password: string) {
-    AccountsManager.set(account, password).then(
-      () => { this.setPasswordFulfilled(account, password) },
+class CrendetialsActions {
+  setPassword(username: string, password: string) {
+    CrendetialsManager.set(username, password).then(
+      () => { this.setPasswordFulfilled(username, password) },
       error => { this.setPasswordRejected(error) }
     )
-    return { account, password }
+    return { username, password }
   }
 
-  setPasswordFulfilled(account: string, password: string) {
-    return { account, password }
+  setPasswordFulfilled(username: string, password: string) {
+    return { username, password }
   }
 
   setPasswordRejected(error) {
     return error || true
   }
 
-  getPassword(account: string) {
-    AccountsManager.get(account).then(
-      (response) => { this.getPasswordFulfilled(account, response.password) },
+  getPassword(username: string) {
+    CrendetialsManager.get(username).then(
+      (response) => { this.getPasswordFulfilled(username, response.password) },
       error => { this.getPasswordRejected(error) }
     )
-    return { account }
+    return { username }
   }
 
-  getPasswordFulfilled(account: string, password: string) {
-    return { account, password }
+  getPasswordFulfilled(username: string, password: string) {
+    return { username, password }
   }
 
   getPasswordRejected(error) {
@@ -53,4 +53,4 @@ class AccountsActions {
   }
 }
 
-export default alt.createActions(AccountsActions)
+export default alt.createActions(CrendetialsActions)

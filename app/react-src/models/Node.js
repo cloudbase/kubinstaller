@@ -16,30 +16,29 @@ limitations under the License.
 
 // @flow
 
+import Credentials from '../models/Credentials'
+
 export default class Node {
   id: string
   host: string
-  os: string
+  os: 'linux' | 'windows'
   isMaster: boolean
   isNode: boolean
+  credentials: Credentials
+  sshKey: string
 
-  constructor(props?: {
-    id?: string, host?: string, os?: string, isMaster?: boolean, isNode?: boolean,
-  } | Node) {
-    this.id = (props && props.id) || `node-${new Date().getTime()}`
-    this.host = (props && props.host) || ''
-    this.os = (props && props.os) || ''
-    this.isMaster = (props && props.isMaster) || false
-    this.isNode = (props && props.isNode) || false
-  }
+  constructor(node?: Node) {
+    this.id = (node && node.id) || `node-${new Date().getTime()}`
+    this.host = (node && node.host) || ''
+    this.os = (node && node.os) || 'linux'
+    this.isMaster = (node && node.isMaster) || false
+    this.isNode = (node && node.isNode) || false
+    this.sshKey = (node && node.sshKey) || ''
 
-  static random(): Node {
-    return new Node({
-      id: `node-${Math.random() * 100}`,
-      host: `192.168.10.${Math.floor(Math.random() * 256)}`,
-      os: ['Windows', 'Linux'][Math.floor(Math.random() * 2)],
-      isMaster: [true, false][Math.floor(Math.random() * 2)],
-      isNode: [true, false][Math.floor(Math.random() * 2)],
-    })
+    if (node && node.credentials) {
+      this.credentials = new Credentials(node.credentials.username, node.credentials.password)
+    } else {
+      this.credentials = new Credentials()
+    }
   }
 }

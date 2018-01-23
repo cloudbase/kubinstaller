@@ -17,4 +17,4 @@ limitations under the License.
 // @flow
 
 import './Persistence'
-import './Accounts'
+import './Credentials'

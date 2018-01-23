@@ -17,25 +17,25 @@ limitations under the License.
 // @flow
 
 import alt from '../alt'
-import AccountsActions from '../actions/AccountsActions'
-import Account from '../models/Account'
+import CrendetialsActions from '../actions/CrendetialsActions'
+import Credentials from '../models/Credentials'
 
-class AccountsStore {
-  accounts: Account[]
-  bindActions: (actions: AccountsActions) => void
+class CredentialsStore {
+  credentials: Credentials[]
+  bindActions: (actions: CrendetialsActions) => void
 
   constructor() {
-    this.accounts = []
+    this.credentials = []
 
-    this.bindActions(AccountsActions)
+    this.bindActions(CrendetialsActions)
   }
 
   onSetPassword() {
     console.log('Setting the password ...') // eslint-disable-line no-console
   }
 
-  onSetPasswordFulfilled(account: Account) {
-    this.accounts = [...this.accounts, account]
+  onSetPasswordFulfilled(credentials: Credentials) {
+    this.credentials = [...this.credentials, credentials]
     console.log('Password set successfully!') // eslint-disable-line no-console
   }
 
@@ -47,8 +47,8 @@ class AccountsStore {
     console.log('Getting the password ...') // eslint-disable-line no-console
   }
 
-  onGetPasswordFulfilled(account: Account) {
-    this.accounts = [...this.accounts, account]
+  onGetPasswordFulfilled(credentials: Credentials) {
+    this.credentials = [...this.credentials, credentials]
     console.log('Password retrieved successfully!') // eslint-disable-line no-console
   }
 
@@ -57,4 +57,4 @@ class AccountsStore {
   }
 }
 
-export default alt.createStore(AccountsStore)
+export default alt.createStore(CredentialsStore)

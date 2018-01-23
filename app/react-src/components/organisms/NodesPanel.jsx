@@ -70,6 +70,7 @@ type Props = {
   onNodeIsNodeToggle: (node: Node, toggled: boolean) => void,
   onNewNodeClick: () => void,
   onDeleteSelection: () => void,
+  onNodeMoreClick: (node: Node) => void,
 }
 
 
@@ -132,7 +133,7 @@ class NodesPanel extends React.Component<Props> {
                 </TableRowColumn>
                 <TableRowColumn style={colStyles[4]}>
                   <MoreVertStyled
-                    onClick={e => { e.stopPropagation() }}
+                    onClick={e => { e.stopPropagation(); this.props.onNodeMoreClick(node) }}
                     color="#4C4D51"
                   />
                 </TableRowColumn>

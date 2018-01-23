@@ -37,3 +37,11 @@ declare module 'material-ui/TextField' {
 declare module 'material-ui/Dialog' {
   declare module.exports: any;
 }
+
+declare module 'material-ui/RadioButton' {
+  declare module.exports: any;
+}
+
+declare module 'material-ui/CircularProgress' {
+  declare module.exports: any;
+}

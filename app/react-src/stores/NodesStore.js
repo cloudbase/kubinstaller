@@ -20,23 +20,16 @@ import alt from '../alt'
 import NodesActions from '../actions/NodesActions'
 import Node from '../models/Node'
 
-const updateArray = (array: Array<Node>, id: string, callback: (node: Node) => Node) => {
-  return array.map((node: Node) => {
-    if (node.id === id) {
-      return new Node(callback(node))
-    }
-    return new Node(node)
-  })
-}
-
 class NodesStore {
   nodes: Node[]
   selectedNodes: number[]
+  validating: boolean
   bindActions: (actions: NodesActions) => void
 
   constructor() {
     this.nodes = []
     this.selectedNodes = []
+    this.validating = false
 
     this.bindActions(NodesActions)
   }
@@ -51,22 +44,18 @@ class NodesStore {
     }
   }
 
-  onNodeIsMasterToggle(options: { node: Node, toggled: boolean, }) {
-    this.nodes = updateArray(this.nodes, options.node.id, (node: Node) => {
-      node.isMaster = options.toggled
-      return node
-    })
+  onAdd(options: { node: Node, }) {
+    this.nodes = [...this.nodes, options.node]
+    this.selectedNodes = []
   }
 
-  onNodeIsNodeToggle(options: { node: Node, toggled: boolean, }) {
-    this.nodes = updateArray(this.nodes, options.node.id, (node: Node) => {
-      node.isNode = options.toggled
-      return node
+  onUpdate(options: { node: Node, }) {
+    this.nodes = this.nodes.map(node => {
+      if (node.id === options.node.id) {
+        return new Node(options.node)
+      }
+      return new Node(node)
     })
-  }
-
-  onNewNode() {
-    this.nodes = [...this.nodes, Node.random()]
     this.selectedNodes = []
   }
 
@@ -78,6 +67,18 @@ class NodesStore {
   onDeleteSelection() {
     this.nodes = this.nodes.filter((_, i: number) => this.selectedNodes.indexOf(i) === -1)
     this.selectedNodes = []
+  }
+
+  onValidate() {
+    this.validating = true
+  }
+
+  onValidateFulfilled() {
+    this.validating = false
+  }
+
+  onValidateRejected() {
+    this.validating = false
   }
 }
 

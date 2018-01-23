@@ -26,16 +26,12 @@ class NodesActions {
     return { value }
   }
 
-  nodeIsMasterToggle(node: Node, toggled: boolean) {
-    return { node, toggled }
+  add(node: Node) {
+    return { node }
   }
 
-  nodeIsNodeToggle(node: Node, toggled: boolean) {
-    return { node, toggled }
-  }
-
-  newNode() {
-    return true
+  update(node: Node) {
+    return { node }
   }
 
   save() {
@@ -61,6 +57,32 @@ class NodesActions {
 
   deleteSelection() {
     return true
+  }
+
+  validate(node: Node) {
+    return {
+      promise: new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if (node.host === 'localhost') {
+            reject(new Error('Node is localhost'))
+          } else {
+            resolve(node)
+          }
+        }, 3000)
+      }).then(
+        () => { this.validateFulfilled(node) },
+        reason => { this.validateRejected(node, reason) },
+      ),
+      node,
+    }
+  }
+
+  validateFulfilled(node: Node) {
+    return { node }
+  }
+
+  validateRejected(node: Node, reason: Error) {
+    return { node, reason }
   }
 }
 

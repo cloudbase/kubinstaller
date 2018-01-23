@@ -16,14 +16,12 @@ limitations under the License.
 
 // @flow
 
-import Ipc from './Ipc'
+export default class Credentials {
+  username: string
+  password: string
 
-export default class AccountsManager {
-  static set(account: string, password: string): Promise<any> {
-    return Ipc.send('set-password', { account, password })
-  }
-
-  static get(account: string): Promise<any> {
-    return Ipc.send('get-password', { account })
+  constructor(username?: string, password?: string) {
+    this.username = username || ''
+    this.password = password || ''
   }
 }

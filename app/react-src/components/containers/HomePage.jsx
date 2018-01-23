@@ -18,19 +18,18 @@ limitations under the License.
 
 import React from 'react'
 import styled from 'styled-components'
-import Dialog from 'material-ui/Dialog'
 
 import connectToStores from '../../utils/connectToStores'
 import OptionsStore from '../../stores/OptionsStore'
 import OptionsActions from '../../actions/OptionsActions'
 import NodesStore from '../../stores/NodesStore'
 import NodesActions from '../../actions/NodesActions'
-import AccountsStore from '../../stores/AccountsStore'
+import CredentialsStore from '../../stores/CredentialsStore'
 import OptionsPanel from '../organisms/OptionsPanel'
 import NodesPanel from '../organisms/NodesPanel'
 import MainTemplate from './MainTemplate'
 import Node from '../../models/Node'
-import NodeComponent from '../organisms/Node'
+import NodeModal from '../organisms/NodeModal'
 
 const Wrapper = styled.div``
 const Panels = styled.div`
@@ -42,7 +41,7 @@ const Panels = styled.div`
 `
 
 type Props = {
-  networkDrivers: Array<any>,
+  networkDrivers: any[],
   selectedNetworkDriver: string,
   clusterNetworkStartIp: string,
   clusterNetworkEndIp: string,
@@ -51,12 +50,14 @@ type Props = {
   ingressToggled: boolean,
   helmToggled: boolean,
   registryToggled: boolean,
-  nodes: Array<Node>,
-  selectedNodes: Array<number>,
+  nodes: Node[],
+  selectedNodes: number[],
+  nodesValidating: boolean,
 }
 
 type State = {
   showNodeModal: boolean,
+  selectedNode: ?Node,
 }
 
 class HomePage extends React.Component<Props, State> {
@@ -67,7 +68,7 @@ class HomePage extends React.Component<Props, State> {
   static getPropsFromStores() {
     let optionsStore = OptionsStore.getState()
     let nodesStore = NodesStore.getState()
-    let accountsStore = AccountsStore.getState()
+    let credentialsStore = CredentialsStore.getState()
     return {
       networkDrivers: optionsStore.networkDrivers,
       selectedNetworkDriver: optionsStore.selectedNetworkDriver,
@@ -80,12 +81,14 @@ class HomePage extends React.Component<Props, State> {
       registryToggled: optionsStore.registryToggled,
       nodes: nodesStore.nodes,
       selectedNodes: nodesStore.selectedNodes,
-      accounts: accountsStore.accounts,
+      credentials: credentialsStore.credentials,
+      nodesValidating: nodesStore.validating,
     }
   }
 
   state = {
     showNodeModal: false,
+    selectedNode: null,
   }
 
   componentWillMount() {
@@ -130,22 +133,50 @@ class HomePage extends React.Component<Props, State> {
   }
 
   handleNodeIsMasterToggle(node: Node, toggled) {
-    NodesActions.nodeIsMasterToggle(node, toggled)
+    let newNode = new Node(node)
+    newNode.isMaster = toggled
+    NodesActions.update(newNode)
     NodesActions.save()
   }
 
   handleNodeIsNodeToggle(node, toggled) {
-    NodesActions.nodeIsNodeToggle(node, toggled)
+    let newNode = new Node(node)
+    newNode.isNode = toggled
+    NodesActions.update(newNode)
     NodesActions.save()
   }
 
   handleNewNodeClick() {
-    this.setState({ showNodeModal: true })
+    this.setState({ showNodeModal: true, selectedNode: null })
   }
 
   handleDeleteSelection() {
     NodesActions.deleteSelection()
     NodesActions.save()
+  }
+
+  handleNodeModalClose() {
+    this.setState({ showNodeModal: false })
+  }
+
+  handleAddNodeClick(node: Node) {
+    NodesActions.validate(node).promise.then(() => {
+      NodesActions.add(node)
+      NodesActions.save()
+      this.setState({ showNodeModal: false })
+    })
+  }
+
+  handleEditNodeClick(node: Node) {
+    NodesActions.validate(node).promise.then(() => {
+      NodesActions.update(node)
+      NodesActions.save()
+      this.setState({ showNodeModal: false })
+    })
+  }
+
+  handleNodeMoreClick(selectedNode: Node) {
+    this.setState({ showNodeModal: true, selectedNode })
   }
 
   render() {
@@ -162,6 +193,7 @@ class HomePage extends React.Component<Props, State> {
                 onNodeIsNodeToggle={(node, toggled) => { this.handleNodeIsNodeToggle(node, toggled) }}
                 onNewNodeClick={() => { this.handleNewNodeClick() }}
                 onDeleteSelection={() => { this.handleDeleteSelection() }}
+                onNodeMoreClick={node => { this.handleNodeMoreClick(node) }}
               />
               <OptionsPanel
                 networkDrivers={this.props.networkDrivers}
@@ -183,13 +215,16 @@ class HomePage extends React.Component<Props, State> {
                 onRegistryToggle={v => { this.handleRegistryToggle(v) }}
               />
             </Panels>
-            <Dialog
-              modal
-              open={this.state.showNodeModal}
-              title="Add a new Kubernetes Node"
-            >
-              <NodeComponent />
-            </Dialog>
+            {this.state.showNodeModal ? (
+              <NodeModal
+                onCancelClick={() => this.handleNodeModalClose()}
+                onAddNodeClick={node => this.handleAddNodeClick(node)}
+                onEditNodeClick={node => this.handleEditNodeClick(node)}
+                node={this.state.selectedNode}
+                isEditMode={this.state.selectedNode !== null}
+                validating={this.props.nodesValidating}
+              />
+            ) : null}
           </Wrapper>
       )}
       />
