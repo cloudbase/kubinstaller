@@ -18,11 +18,14 @@ limitations under the License.
 
 import * as React from 'react'
 import styled from 'styled-components'
+import FlatButton from 'material-ui/FlatButton'
+import { ipcRenderer, shell } from 'electron'
 
 import StyleHelper from '../../utils/StyleHelper'
 import logoImage from '../../resources/images/splash-logo.svg'
 import appPackage from '../../../package.json'
 import ExternalLink from '../atoms/ExternalLink'
+import theme from '../../utils/MuiTheme'
 
 const Wrapper = styled.div`
   width: 377px;
@@ -69,8 +72,54 @@ const Content = styled.div`
     }
   }
 `
+const Footer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: calc(100% - 16px);
+  margin: 40px 0 16px 0;
+`
+const RightButtons = styled.div`
+  display: flex;
+`
 
-class Slash extends React.Component<any> {
+type State = {
+  isSplash: boolean,
+}
+
+class About extends React.Component<any, State> {
+  state = {
+    isSplash: false,
+  }
+
+  componentWillMount() {
+    const isSplash = window.location.href.indexOf('isSplash=true') > -1
+    this.setState({ isSplash })
+  }
+
+  handleCloseClick() {
+    ipcRenderer.send('close-about')
+  }
+
+  renderFooter() {
+    if (this.state.isSplash) {
+      return null
+    }
+
+    return (
+      <Footer>
+        <FlatButton label="CLOSE" onClick={() => { this.handleCloseClick() }} />
+        <RightButtons>
+          <FlatButton label="ISSUES" onClick={() => { shell.openExternal(`${appPackage.homepage}/issues`) }} />
+          <FlatButton
+            label="GITHUB"
+            onClick={() => { shell.openExternal(appPackage.homepage) }}
+            style={{ color: theme.palette.primary1Color }}
+          />
+        </RightButtons>
+      </Footer>
+    )
+  }
+
   render() {
     return (
       <Wrapper>
@@ -94,9 +143,10 @@ class Slash extends React.Component<any> {
             </div>
           </Content>
         </Body>
+        {this.renderFooter()}
       </Wrapper>
     )
   }
 }
 
-export default Slash
+export default About

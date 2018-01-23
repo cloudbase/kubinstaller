@@ -1,10 +1,12 @@
 // @flow
 import { app, Menu, shell, BrowserWindow } from 'electron'
+import EventEmitter from 'events'
 
-export default class MenuBuilder {
+export default class MenuBuilder extends EventEmitter {
   mainWindow: BrowserWindow
 
   constructor(mainWindow: BrowserWindow) {
+    super()
     this.mainWindow = mainWindow
   }
 
@@ -28,7 +30,7 @@ export default class MenuBuilder {
   }
 
   setupDevelopmentEnvironment() {
-    this.mainWindow.openDevTools()
+    // this.mainWindow.openDevTools()
     this.mainWindow.webContents.on('context-menu', (e, props) => {
       const { x, y } = props
 
@@ -45,13 +47,11 @@ export default class MenuBuilder {
 
   buildDarwinTemplate() {
     const subMenuAbout = {
-      label: 'Electron',
+      label: 'KubInstaller',
       submenu: [
-        { label: 'About ElectronReact', selector: 'orderFrontStandardAboutPanel:' },
+        { label: 'About KubInstaller', click: () => { this.emit('item-click', 'about') } },
         { type: 'separator' },
-        { label: 'Services', submenu: [] },
-        { type: 'separator' },
-        { label: 'Hide ElectronReact', accelerator: 'Command+H', selector: 'hide:' },
+        { label: 'Hide KubInstaller', accelerator: 'Command+H', selector: 'hide:' },
         { label: 'Hide Others', accelerator: 'Command+Shift+H', selector: 'hideOtherApplications:' },
         { label: 'Show All', selector: 'unhideAllApplications:' },
         { type: 'separator' },
@@ -120,9 +120,6 @@ export default class MenuBuilder {
     const templateDefault = [{
       label: '&File',
       submenu: [{
-        label: '&Open',
-        accelerator: 'Ctrl+O',
-      }, {
         label: '&Close',
         accelerator: 'Ctrl+W',
         click: () => {
