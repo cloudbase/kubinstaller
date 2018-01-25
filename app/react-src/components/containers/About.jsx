@@ -29,14 +29,14 @@ import theme from '../../utils/MuiTheme'
 
 const Wrapper = styled.div`
   width: 377px;
-  height: 396px;
+  height: ${props => props.isSplash ? '230px' : '396px'};
   background: #FAFAFA;
   border-radius: 2px;
   margin: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 60px;
+  margin-top: 75px;
 `
 const Logo = styled.div`
   width: 140px;
@@ -44,7 +44,9 @@ const Logo = styled.div`
   background: url('${logoImage}') center no-repeat;
   margin-top: -60px;
 `
-const Body = styled.div``
+const Body = styled.div`
+  width: calc(100% - 16px);
+`
 const Name = styled.div`
   font-size: 42px;
   display: flex;
@@ -75,7 +77,6 @@ const Content = styled.div`
 const Footer = styled.div`
   display: flex;
   justify-content: space-between;
-  width: calc(100% - 16px);
   margin: 40px 0 16px 0;
 `
 const RightButtons = styled.div`
@@ -100,50 +101,50 @@ class About extends React.Component<any, State> {
     ipcRenderer.send('close-about')
   }
 
-  renderFooter() {
+  renderBody() {
     if (this.state.isSplash) {
       return null
     }
 
     return (
-      <Footer>
-        <FlatButton label="CLOSE" onClick={() => { this.handleCloseClick() }} />
-        <RightButtons>
-          <FlatButton label="ISSUES" onClick={() => { shell.openExternal(`${appPackage.homepage}/issues`) }} />
-          <FlatButton
-            label="GITHUB"
-            onClick={() => { shell.openExternal(appPackage.homepage) }}
-            style={{ color: theme.palette.primary1Color }}
-          />
-        </RightButtons>
-      </Footer>
+      <Body>
+        <Content>
+          <div>
+            Version {appPackage.version}&nbsp;
+            <ExternalLink href={`${appPackage.homepage}/blob/master/CHANGELOG.md`}>(release notes)</ExternalLink>
+          </div>
+          <div>© 2018 Cloudbase Solutions SRL</div>
+          <div>
+            <ExternalLink href={`${appPackage.homepage}/blob/master/LICENSE`}>Terms and Conditions</ExternalLink>
+          </div>
+          <div>
+            <ExternalLink href={`${appPackage.homepage}/blob/master/LICENSE`}>License and Open Source Notices</ExternalLink>
+          </div>
+        </Content>
+        <Footer>
+          <FlatButton label="CLOSE" onClick={() => { this.handleCloseClick() }} />
+          <RightButtons>
+            <FlatButton label="ISSUES" onClick={() => { shell.openExternal(`${appPackage.homepage}/issues`) }} />
+            <FlatButton
+              label="GITHUB"
+              onClick={() => { shell.openExternal(appPackage.homepage) }}
+              style={{ color: theme.palette.primary1Color }}
+            />
+          </RightButtons>
+        </Footer>
+      </Body>
     )
   }
 
   render() {
     return (
-      <Wrapper>
+      <Wrapper isSplash={this.state.isSplash}>
         <Logo />
-        <Body>
-          <Name>
-            <NameLight>kub</NameLight>
-            <NameBold>installer</NameBold>
-          </Name>
-          <Content>
-            <div>
-              Version {appPackage.version}&nbsp;
-              <ExternalLink href={`${appPackage.homepage}/blob/master/CHANGELOG.md`}>(release notes)</ExternalLink>
-            </div>
-            <div>© 2018 Cloudbase Solutions SRL</div>
-            <div>
-              <ExternalLink href={`${appPackage.homepage}/blob/master/LICENSE`}>Terms and Conditions</ExternalLink>
-            </div>
-            <div>
-              <ExternalLink href={`${appPackage.homepage}/blob/master/LICENSE`}>License and Open Source Notices</ExternalLink>
-            </div>
-          </Content>
-        </Body>
-        {this.renderFooter()}
+        <Name>
+          <NameLight>kub</NameLight>
+          <NameBold>installer</NameBold>
+        </Name>
+        {this.renderBody()}
       </Wrapper>
     )
   }

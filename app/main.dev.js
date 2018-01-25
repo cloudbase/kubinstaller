@@ -56,6 +56,7 @@ const buildWindows = () => {
             windowBuilder.buildSplashWindow({
               parent: windowBuilder.mainWindow,
               modal: true,
+              height: 500,
             })
           }
         })
