@@ -93,38 +93,47 @@ class HomePage extends React.Component<Props, State> {
 
   componentWillMount() {
     NodesActions.load()
+    OptionsActions.load()
   }
 
   handleNetworkDriverChange(name) {
     OptionsActions.updateSelectedNetworkDriver(name)
+    OptionsActions.save()
   }
 
   handleClusterNetworkStartIpChange(ip) {
     OptionsActions.updateClusterNetworkStartIp(ip)
+    OptionsActions.save()
   }
 
   handleClusterNetworkEndIpChange(ip) {
     OptionsActions.updateClusterNetworkEndIp(ip)
+    OptionsActions.save()
   }
 
   handleServiceNetworkStartIpChange(ip) {
     OptionsActions.updateServiceNetworkStartIp(ip)
+    OptionsActions.save()
   }
 
   handleServiceNetworkEndIpChange(ip) {
     OptionsActions.updateServiceNetworkEndIp(ip)
+    OptionsActions.save()
   }
 
   handleIngressToggle(toggled) {
     OptionsActions.updateIngressToggle(toggled)
+    OptionsActions.save()
   }
 
   handleHelmToggle(toggled) {
     OptionsActions.updateHelmToggle(toggled)
+    OptionsActions.save()
   }
 
   handleRegistryToggle(toggled) {
     OptionsActions.updateRegistryToggle(toggled)
+    OptionsActions.save()
   }
 
   handleNodeSelection(selection) {

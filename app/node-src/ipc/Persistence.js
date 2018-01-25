@@ -21,24 +21,39 @@ import path from 'path'
 import fs from 'fs'
 
 const userDataPath = electron.app.getPath('userData')
-const nodesFilePath = path.join(userDataPath, 'nodes.json')
 
-ipcMain.on('save-nodes', (event, data) => {
-  fs.writeFile(nodesFilePath, JSON.stringify(data), err => {
+const write = (fileName: string, event, data) => {
+  fs.writeFile(path.join(userDataPath, `${fileName}.json`), JSON.stringify(data), err => {
     if (err) {
-      event.sender.send('save-nodes', { status: 'error', ...err })
+      event.sender.send(`save-${fileName}`, { status: 'error', ...err })
     } else {
-      event.sender.send('save-nodes', { status: 'success' })
+      event.sender.send(`save-${fileName}`, { status: 'success' })
     }
   })
+}
+
+const read = (fileName: string, event) => {
+  fs.readFile(path.join(userDataPath, `${fileName}.json`), (err, data: any) => {
+    if (err) {
+      event.sender.send(`load-${fileName}`, { status: 'error', ...err })
+    } else {
+      event.sender.send(`load-${fileName}`, { status: 'success', ...JSON.parse(data.toString()) })
+    }
+  })
+}
+
+ipcMain.on('save-nodes', (event, data) => {
+  write('nodes', event, data)
 })
 
 ipcMain.on('load-nodes', event => {
-  fs.readFile(nodesFilePath, (err, data: any) => {
-    if (err) {
-      event.sender.send('load-nodes', { status: 'error', ...err })
-    } else {
-      event.sender.send('load-nodes', { status: 'success', ...JSON.parse(data.toString()) })
-    }
-  })
+  read('nodes', event)
+})
+
+ipcMain.on('save-options', (event, data) => {
+  write('options', event, data)
+})
+
+ipcMain.on('load-options', event => {
+  read('options', event)
 })

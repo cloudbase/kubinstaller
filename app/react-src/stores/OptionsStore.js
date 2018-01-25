@@ -34,7 +34,11 @@ class OptionsStore {
   bindActions: (actions: OptionsActions) => void
 
   constructor() {
-    this.networkDrivers = [new NetworkDriver({ name: 'Open vSwitch' }), new NetworkDriver({ name: 'Others' })]
+    const networkDriverMockup1 = new NetworkDriver()
+    networkDriverMockup1.name = 'Open vSwitch'
+    const networkDriverMockup2 = new NetworkDriver()
+    networkDriverMockup2.name = 'Others'
+    this.networkDrivers = [networkDriverMockup1, networkDriverMockup2]
     this.selectedNetworkDriver = this.networkDrivers[0].name
     this.clusterNetworkStartIp = ''
     this.clusterNetworkEndIp = ''
@@ -77,6 +81,18 @@ class OptionsStore {
 
   onUpdateRegistryToggle(arg: { value: boolean, }) {
     this.registryToggled = arg.value
+  }
+
+  onLoadFulfilled(data: OptionsStore) {
+    this.networkDrivers = data.networkDrivers
+    this.selectedNetworkDriver = data.selectedNetworkDriver
+    this.clusterNetworkStartIp = data.clusterNetworkStartIp
+    this.clusterNetworkEndIp = data.clusterNetworkEndIp
+    this.serviceNetworkStartIp = data.serviceNetworkStartIp
+    this.serviceNetworkEndIp = data.serviceNetworkEndIp
+    this.ingressToggled = data.ingressToggled
+    this.helmToggled = data.helmToggled
+    this.registryToggled = data.registryToggled
   }
 }
 

@@ -41,7 +41,7 @@ class NodesActions {
   load() {
     return {
       promise: PersistenceManager.load('nodes').then(
-        data => { this.loadFulfilled(data) },
+        (data: NodesStore) => { this.loadFulfilled(data) },
         error => { this.loadRejected(error) }
       ),
     }
@@ -61,13 +61,9 @@ class NodesActions {
 
   validate(node: Node) {
     return {
-      promise: new Promise((resolve, reject) => {
+      promise: new Promise(resolve => {
         setTimeout(() => {
-          if (node.host === 'localhost') {
-            reject(new Error('Node is localhost'))
-          } else {
-            resolve(node)
-          }
+          resolve(node)
         }, 3000)
       }).then(
         () => { this.validateFulfilled(node) },

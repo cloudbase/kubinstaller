@@ -17,6 +17,8 @@ limitations under the License.
 // @flow
 
 import alt from '../alt'
+import PersistenceManager from '../ipc/PersistenceManager'
+import OptionsStore from '../stores/OptionsStore'
 
 class OptionsActions {
   updateSelectedNetworkDriver(value: string) {
@@ -49,6 +51,27 @@ class OptionsActions {
 
   updateRegistryToggle(value: boolean) {
     return { value }
+  }
+
+  save() {
+    return { promise: PersistenceManager.save('options', OptionsStore.getState()) }
+  }
+
+  load() {
+    return {
+      promise: PersistenceManager.load('options').then(
+        (data: OptionsStore) => { this.loadFulfilled(data) },
+        error => { this.loadRejected(error) }
+      ),
+    }
+  }
+
+  loadFulfilled(data: OptionsStore) {
+    return data || true
+  }
+
+  loadRejected(error) {
+    return error || true
   }
 }
 

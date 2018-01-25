@@ -19,7 +19,11 @@ limitations under the License.
 export default class NetworkDriver {
   name: string
 
-  constructor(props: { name: string, }) {
-    this.name = props.name
+  constructor(networkDriver?: NetworkDriver) {
+    if (!networkDriver) {
+      return
+    }
+
+    this.name = networkDriver.name || ''
   }
 }

@@ -11,8 +11,8 @@
  * @flow
  */
 import { app, ipcMain } from 'electron'
-import MenuBuilder from './node-src/MenuBuilder'
-import WindowBuilder from './node-src/WindowBuilder'
+import MenuBuilder from './node-src/builders/MenuBuilder'
+import WindowBuilder from './node-src/builders/WindowBuilder'
 import './node-src/ipc'
 
 const appUrl = `file://${__dirname}/app.html`
