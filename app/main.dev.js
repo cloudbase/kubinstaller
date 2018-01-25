@@ -1,5 +1,3 @@
-/* eslint global-require: 0, flowtype-errors/show-errors: 0 */
-
 /**
  * This module executes inside of electron's main process. You can start
  * electron renderer process from here and communicate with the other processes
@@ -7,9 +5,10 @@
  *
  * When running `npm run build` or `npm run build-main`, this file is compiled to
  * `./app/main.prod.js` using webpack. This gives us some performance wins.
- *
- * @flow
  */
+
+// @flow
+
 import { app, ipcMain } from 'electron'
 import MenuBuilder from './node-src/builders/MenuBuilder'
 import WindowBuilder from './node-src/builders/WindowBuilder'
@@ -36,30 +35,18 @@ const installExtensions = async () => {
     'REACT_DEVELOPER_TOOLS',
   ]
 
-  return Promise
-    .all(extensions.map(name => installer.default(installer[name], forceDownload)))
+  return Promise.all(extensions.map(name => installer.default(installer[name], forceDownload)))
     .catch(console.log) // eslint-disable-line no-console
 }
 
 const windowBuilder = new WindowBuilder(appUrl)
-let menuBuilder = null
+let menuBuilder = new MenuBuilder()
 
 const buildWindows = () => {
   windowBuilder.buildSplashWindow(null, true).then(() => {
     setTimeout(() => {
       windowBuilder.buildMainWindow().then(() => {
         windowBuilder.destroySplashWindow()
-        menuBuilder = new MenuBuilder(windowBuilder.mainWindow)
-        menuBuilder.buildMenu()
-        menuBuilder.on('item-click', (item: string) => {
-          if (item === 'about' && !windowBuilder.splashWindow) {
-            windowBuilder.buildSplashWindow({
-              parent: windowBuilder.mainWindow,
-              modal: true,
-              height: 500,
-            })
-          }
-        })
       })
     }, 3000)
   })
@@ -68,6 +55,16 @@ const buildWindows = () => {
 /**
  * Add event listeners...
  */
+
+menuBuilder.on('item-click', (item: string) => {
+  if (item === 'about' && !windowBuilder.splashWindow) {
+    windowBuilder.buildSplashWindow({
+      parent: windowBuilder.mainWindow,
+      modal: true,
+      height: 500,
+    })
+  }
+})
 
 app.on('window-all-closed', () => {
   app.quit()
@@ -78,6 +75,7 @@ app.on('ready', async () => {
     await installExtensions()
   }
   buildWindows()
+  menuBuilder.buildMenu()
 })
 
 ipcMain.on('close-about', () => {

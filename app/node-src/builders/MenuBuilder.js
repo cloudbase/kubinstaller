@@ -1,109 +1,72 @@
+/*
+Copyright 2018 Cloudbase Solutions Srl
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 // @flow
-import { app, Menu, shell, BrowserWindow } from 'electron'
+import { Menu, shell } from 'electron'
 import EventEmitter from 'events'
+import appPackage from '../../package.json'
 
 export default class MenuBuilder extends EventEmitter {
-  mainWindow: BrowserWindow
-
-  constructor(mainWindow: BrowserWindow) {
-    super()
-    this.mainWindow = mainWindow
-  }
-
   buildMenu() {
-    if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
-      this.setupDevelopmentEnvironment()
-    }
-
-    let template
-
-    if (process.platform === 'darwin') {
-      template = this.buildDarwinTemplate()
-    } else {
-      template = this.buildDefaultTemplate()
-    }
-
-    const menu = Menu.buildFromTemplate(template)
+    const menu = Menu.buildFromTemplate(this.buildDefaultTemplate())
     Menu.setApplicationMenu(menu)
 
     return menu
   }
 
-  setupDevelopmentEnvironment() {
-    // this.mainWindow.openDevTools()
-    this.mainWindow.webContents.on('context-menu', (e, props) => {
-      const { x, y } = props
-
-      Menu
-        .buildFromTemplate([{
-          label: 'Inspect element',
-          click: () => {
-            this.mainWindow.inspectElement(x, y)
-          },
-        }])
-        .popup(this.mainWindow)
-    })
-  }
-
-  buildDarwinTemplate() {
+  buildDefaultTemplate() {
     const subMenuAbout = {
-      label: 'KubInstaller',
+      label: appPackage.productName,
       submenu: [
-        { label: 'About KubInstaller', click: () => { this.emit('item-click', 'about') } },
+        { label: `About ${appPackage.productName}`, click: () => { this.emit('item-click', 'about') } },
         { type: 'separator' },
-        { label: 'Hide KubInstaller', accelerator: 'Command+H', selector: 'hide:' },
-        { label: 'Hide Others', accelerator: 'Command+Shift+H', selector: 'hideOtherApplications:' },
-        { label: 'Show All', selector: 'unhideAllApplications:' },
+        { role: 'hide' },
+        { role: 'hideothers' },
         { type: 'separator' },
-        { label: 'Quit', accelerator: 'Command+Q', click: () => { app.quit() } },
+        { role: 'quit' },
       ],
     }
     const subMenuEdit = {
       label: 'Edit',
-      submenu: [
-        { label: 'Undo', accelerator: 'Command+Z', selector: 'undo:' },
-        { label: 'Redo', accelerator: 'Shift+Command+Z', selector: 'redo:' },
-        { type: 'separator' },
-        { label: 'Cut', accelerator: 'Command+X', selector: 'cut:' },
-        { label: 'Copy', accelerator: 'Command+C', selector: 'copy:' },
-        { label: 'Paste', accelerator: 'Command+V', selector: 'paste:' },
-        { label: 'Select All', accelerator: 'Command+A', selector: 'selectAll:' },
-      ],
+      role: 'editMenu',
     }
     const subMenuViewDev = {
       label: 'View',
       submenu: [
-        { label: 'Reload', accelerator: 'Command+R', click: () => { this.mainWindow.webContents.reload() } },
-        { label: 'Toggle Full Screen', accelerator: 'Ctrl+Command+F', click: () => { this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen()) } },
-        { label: 'Toggle Developer Tools', accelerator: 'Alt+Command+I', click: () => { this.mainWindow.toggleDevTools() } },
+        { role: 'reload' },
+        { role: 'toggledevtools' },
+        { role: 'togglefullscreen' },
       ],
     }
     const subMenuViewProd = {
       label: 'View',
       submenu: [
-        { label: 'Toggle Full Screen', accelerator: 'Ctrl+Command+F', click: () => { this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen()) } },
-      ],
-    }
-    const subMenuWindow = {
-      label: 'Window',
-      submenu: [
-        { label: 'Minimize', accelerator: 'Command+M', selector: 'performMiniaturize:' },
-        { label: 'Close', accelerator: 'Command+W', selector: 'performClose:' },
-        { type: 'separator' },
-        { label: 'Bring All to Front', selector: 'arrangeInFront:' },
+        { role: 'togglefullscreen' },
       ],
     }
     const subMenuHelp = {
       label: 'Help',
       submenu: [
-        { label: 'Learn More', click() { shell.openExternal('http://electron.atom.io') } },
-        { label: 'Documentation', click() { shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme') } },
-        { label: 'Community Discussions', click() { shell.openExternal('https://discuss.atom.io/c/electron') } },
-        { label: 'Search Issues', click() { shell.openExternal('https://github.com/atom/electron/issues') } },
+        { label: 'Learn More', click() { shell.openExternal(appPackage.homepage) } },
+        { type: 'separator' },
+        { label: 'Search Issues', click() { shell.openExternal(`${appPackage.homepage}/issues`) } },
       ],
     }
 
-    const subMenuView = process.env.NODE_ENV === 'development'
+    const subMenuView = process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true'
       ? subMenuViewDev
       : subMenuViewProd
 
@@ -111,73 +74,7 @@ export default class MenuBuilder extends EventEmitter {
       subMenuAbout,
       subMenuEdit,
       subMenuView,
-      subMenuWindow,
       subMenuHelp,
     ]
-  }
-
-  buildDefaultTemplate() {
-    const templateDefault = [{
-      label: '&File',
-      submenu: [{
-        label: '&Close',
-        accelerator: 'Ctrl+W',
-        click: () => {
-          this.mainWindow.close()
-        },
-      }],
-    }, {
-      label: '&View',
-      submenu: (process.env.NODE_ENV === 'development') ? [{
-        label: '&Reload',
-        accelerator: 'Ctrl+R',
-        click: () => {
-          this.mainWindow.webContents.reload()
-        },
-      }, {
-        label: 'Toggle &Full Screen',
-        accelerator: 'F11',
-        click: () => {
-          this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen())
-        },
-      }, {
-        label: 'Toggle &Developer Tools',
-        accelerator: 'Alt+Ctrl+I',
-        click: () => {
-          this.mainWindow.toggleDevTools()
-        },
-      }] : [{
-        label: 'Toggle &Full Screen',
-        accelerator: 'F11',
-        click: () => {
-          this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen())
-        },
-      }],
-    }, {
-      label: 'Help',
-      submenu: [{
-        label: 'Learn More',
-        click() {
-          shell.openExternal('http://electron.atom.io')
-        },
-      }, {
-        label: 'Documentation',
-        click() {
-          shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme')
-        },
-      }, {
-        label: 'Community Discussions',
-        click() {
-          shell.openExternal('https://discuss.atom.io/c/electron')
-        },
-      }, {
-        label: 'Search Issues',
-        click() {
-          shell.openExternal('https://github.com/atom/electron/issues')
-        },
-      }],
-    }]
-
-    return templateDefault
   }
 }
