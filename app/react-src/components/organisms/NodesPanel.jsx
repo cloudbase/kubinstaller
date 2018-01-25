@@ -40,12 +40,12 @@ import TextEllipsis from '../atoms/TextEllipsis'
 const PanelStyled = styled(Panel)`
   width: 100%;
   min-width: 565px;
-  padding-bottom: 106px;
 `
 const FloatingActionButtonStyled = styled(FloatingActionButton)`
-  position: absolute;
-  bottom: 24px;
-  right: 24px;
+  position: fixed;
+  bottom: 100px;
+  right: 350px;
+  z-index: 100;
 `
 const SelectionInfo = styled.div`
   display: flex;
@@ -94,7 +94,7 @@ class NodesPanel extends React.Component<Props> {
           multiSelectable
           enableSelectAll
           onRowSelection={this.props.onNodeSelection}
-          height="360px"
+          height="455px"
         >
           <TableHeader>
             <TableRow>

@@ -24,7 +24,6 @@ import RaisedButton from 'material-ui/RaisedButton'
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 53px;
   min-width: 890px;
   background: #353746;
   padding: 22px 28px;
@@ -32,10 +31,13 @@ const Wrapper = styled.div`
 const RaisedButtons = styled.div``
 const FlatButtons = styled.div``
 
-class Footer extends React.Component<any> {
+type Props = {
+  className?: string,
+}
+class Footer extends React.Component<Props> {
   render() {
     return (
-      <Wrapper>
+      <Wrapper className={this.props.className}>
         <FlatButtons>
           <FlatButton label="CLI" style={{ marginRight: '32px', color: 'white' }} />
           <FlatButton label="DASHBOARD" style={{ color: 'white' }} />

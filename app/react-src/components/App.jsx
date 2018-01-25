@@ -19,13 +19,16 @@ limitations under the License.
 import * as React from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
-import { injectGlobal } from 'styled-components'
+import styled, { injectGlobal } from 'styled-components'
 
 import Fonts from './atoms/Fonts'
 import MuiTheme from '../utils/MuiTheme'
 
 injectGlobal`
   ${Fonts}
+  html, body, #root {
+    height: 100%;
+  }
   body {
     margin: 0;
     font-family: Roboto;
@@ -33,6 +36,9 @@ injectGlobal`
     color: #353746;
     -webkit-font-smoothing: antialiased;
   }
+`
+const Wrapper = styled.div`
+  height: 100%;
 `
 
 type Props = {
@@ -45,9 +51,9 @@ export default class App extends React.Component<Props> {
   render() {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(MuiTheme)}>
-        <div>
+        <Wrapper>
           {this.props.children}
-        </div>
+        </Wrapper>
       </MuiThemeProvider>
     )
   }

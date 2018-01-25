@@ -49,11 +49,13 @@ const NameBold = styled.div`
   ${StyleHelper.fontWeights.medium};
 `
 
-type Props = {}
+type Props = {
+  className?: string,
+}
 class Header extends React.Component<Props> {
   render() {
     return (
-      <Wrapper>
+      <Wrapper className={this.props.className}>
         <Logo />
         <Text>
           <Name>

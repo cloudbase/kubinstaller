@@ -22,8 +22,22 @@ import styled from 'styled-components'
 import Header from '../atoms/Header'
 import Footer from '../molecules/Footer'
 
-const Wrapper = styled.div``
-const Body = styled.div``
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`
+const Body = styled.div`
+  overflow-y: auto;
+  flex-grow: 1;
+  display: flex;
+`
+const HeaderStyled = styled(Header)`
+  flex-shring: 0;
+`
+const FooterStyled = styled(Footer)`
+  flex-shrink: 0;
+`
 
 type Props = {
   body: React.Node,
@@ -42,9 +56,9 @@ class MainTemplate extends React.Component<Props> {
   render() {
     return (
       <Wrapper>
-        <Header />
+        <HeaderStyled />
         <Body>{this.props.body}</Body>
-        <Footer />
+        <FooterStyled />
       </Wrapper>
     )
   }

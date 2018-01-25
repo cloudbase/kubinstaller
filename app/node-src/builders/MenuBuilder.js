@@ -43,18 +43,22 @@ export default class MenuBuilder extends EventEmitter {
       label: 'Edit',
       role: 'editMenu',
     }
-    const subMenuViewDev = {
-      label: 'View',
-      submenu: [
-        { role: 'reload' },
-        { role: 'toggledevtools' },
-        { role: 'togglefullscreen' },
-      ],
-    }
     const subMenuViewProd = {
       label: 'View',
       submenu: [
         { role: 'togglefullscreen' },
+        { role: 'zoomin' },
+        { role: 'zoomout' },
+        { role: 'resetzoom' },
+      ],
+    }
+    const subMenuViewDev = {
+      ...subMenuViewProd,
+      submenu: [
+        { role: 'reload' },
+        { role: 'toggledevtools' },
+        { type: 'separator' },
+        ...subMenuViewProd.submenu,
       ],
     }
     const subMenuHelp = {
