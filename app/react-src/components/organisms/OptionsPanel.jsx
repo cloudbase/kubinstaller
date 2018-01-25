@@ -47,7 +47,6 @@ const Group = styled.div`
 const GroupLabel = styled.div`
   font-size: 12px;
   color: ${MuiTheme.palette.border2Color}};
-  margin-bottom: 3px;
 `
 const IpRange = styled.div`
   display: flex;
@@ -109,14 +108,12 @@ class OptionsPanel extends React.Component<Props> {
             <IpRange>
               <TextField
                 floatingLabelText="Start IP"
-                floatingLabelFixed
                 fullWidth
                 value={this.props.clusterNetworkStartIp}
                 onChange={e => { this.props.onClusterNetworkStartIpChange(e.target.value) }}
               />
               <TextField
                 floatingLabelText="End IP"
-                floatingLabelFixed
                 fullWidth
                 value={this.props.clusterNetworkEndIp}
                 onChange={e => { this.props.onClusterNetworkEndIpChange(e.target.value) }}
@@ -128,14 +125,12 @@ class OptionsPanel extends React.Component<Props> {
             <IpRange>
               <TextField
                 floatingLabelText="Start IP"
-                floatingLabelFixed
                 fullWidth
                 value={this.props.serviceNetworkStartIp}
                 onChange={e => { this.props.onServiceNetworkStartIpChange(e.target.value) }}
               />
               <TextField
                 floatingLabelText="End IP"
-                floatingLabelFixed
                 fullWidth
                 value={this.props.serviceNetworkEndIp}
                 onChange={e => { this.props.onServiceNetworkEndIpChange(e.target.value) }}

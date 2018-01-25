@@ -191,7 +191,6 @@ class NodeModal extends React.Component<Props, State> {
       <Wrapper>
         <TextField
           floatingLabelText="Hostname"
-          floatingLabelFixed
           fullWidth
           value={this.state.node.host}
           errorText={this.state.hostErrorText}
@@ -218,14 +217,12 @@ class NodeModal extends React.Component<Props, State> {
         <Group flex>
           <TextField
             floatingLabelText="Username"
-            floatingLabelFixed
             errorText={this.state.usernameErrorText}
             value={this.state.node.credentials.username}
             onChange={(event) => { this.handleUsernameChange(event.target.value) }}
           />
           <TextField
             floatingLabelText="Password"
-            floatingLabelFixed
             type="password"
             errorText={this.state.passwordErrorText}
             value={this.state.node.credentials.password}
@@ -235,7 +232,6 @@ class NodeModal extends React.Component<Props, State> {
         <Group>
           <TextField
             floatingLabelText="SSH Public Key"
-            floatingLabelFixed
             fullWidth
             multiLine
             rows={2}
