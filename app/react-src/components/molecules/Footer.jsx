@@ -20,6 +20,7 @@ import * as React from 'react'
 import styled from 'styled-components'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
+import { Link } from 'react-router-dom'
 
 const Wrapper = styled.div`
   display: flex;
@@ -39,8 +40,12 @@ class Footer extends React.Component<Props> {
     return (
       <Wrapper className={this.props.className}>
         <FlatButtons>
-          <FlatButton label="CLI" style={{ marginRight: '32px', color: 'white' }} />
-          <FlatButton label="DASHBOARD" style={{ color: 'white' }} />
+          <Link to="/console">
+            <FlatButton label="CLI" style={{ marginRight: '32px', color: 'white' }} />
+          </Link>
+          <Link to="/">
+            <FlatButton label="DASHBOARD" style={{ color: 'white' }} />
+          </Link>
         </FlatButtons>
         <RaisedButtons>
           <RaisedButton label="DEPLOY" primary style={{ width: '164px' }} />

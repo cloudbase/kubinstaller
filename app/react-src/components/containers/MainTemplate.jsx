@@ -33,7 +33,7 @@ const Body = styled.div`
   display: flex;
 `
 const HeaderStyled = styled(Header)`
-  flex-shring: 0;
+  flex-shrink: 0;
 `
 const FooterStyled = styled(Footer)`
   flex-shrink: 0;
