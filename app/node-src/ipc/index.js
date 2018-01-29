@@ -18,3 +18,4 @@ limitations under the License.
 
 import './Persistence'
 import './Credentials'
+import './FileBrowser'
