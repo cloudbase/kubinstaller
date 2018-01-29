@@ -30,6 +30,7 @@ import Panel from '../atoms/Panel'
 
 const PanelStyled = styled(Panel)`
   ${StyleHelper.exactWidth('300px')}
+  background: inherit;
 `
 const NetworkDriverWrapper = styled.div``
 const NetworkDriverLabel = styled.div`
@@ -57,7 +58,6 @@ const IpRange = styled.div`
 `
 const Option = styled.div`
   padding: 12px 0;
-  border-top: 1px solid ${MuiTheme.palette.borderColor};
   &:last-child {
     padding-bottom: 0;
   }
