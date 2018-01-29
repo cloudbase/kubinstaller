@@ -31,6 +31,9 @@ const checkbox = {
 const radioButton = {
   borderColor: '#90919B',
 }
+const dropDownMenu = {
+  accentColor: palette.border2Color,
+}
 
 export default {
   textField,
@@ -39,4 +42,5 @@ export default {
   raisedButton,
   checkbox,
   radioButton,
+  dropDownMenu,
 }
