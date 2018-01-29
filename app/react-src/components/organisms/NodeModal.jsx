@@ -70,6 +70,7 @@ type State = {
   usernameErrorText: string,
   passwordErrorText: string,
   sshKeyErrorText: string,
+  autoScrollBodyContent: boolean,
 }
 
 class NodeModal extends React.Component<Props, State> {
@@ -82,7 +83,16 @@ class NodeModal extends React.Component<Props, State> {
       usernameErrorText: '',
       passwordErrorText: '',
       sshKeyErrorText: '',
+      autoScrollBodyContent: false,
     }
+  }
+
+  componentWillMount() {
+    if (!document.documentElement) {
+      return
+    }
+
+    this.setState({ autoScrollBodyContent: document.documentElement.clientHeight < 657 })
   }
 
   validate(): boolean {
@@ -277,6 +287,7 @@ class NodeModal extends React.Component<Props, State> {
         title={title}
         contentStyle={{ width: '568px' }}
         actions={this.props.validating ? [modalActions[0]] : modalActions}
+        autoScrollBodyContent={this.state.autoScrollBodyContent}
       >
         {this.renderForm()}
         {this.rendeValidating()}
