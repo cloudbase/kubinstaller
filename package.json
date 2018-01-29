@@ -1,6 +1,6 @@
 {
   "name": "kubinstaller",
-  "productName": "KubInstaller",
+  "productName": "kubinstaller",
   "version": "0.0.1",
   "description": "",
   "scripts": {
@@ -32,8 +32,8 @@
   },
   "browserslist": "electron 1.6",
   "build": {
-    "productName": "KubInstaller",
-    "appId": "it.cloudbasesolutions.kubinstaller",
+    "productName": "kubinstaller",
+    "appId": "com.cloudbasesolutions.kubinstaller",
     "files": [
       "dist/",
       "node_modules/",
