@@ -43,6 +43,7 @@ const FooterStyled = styled(Footer)`
 type Props = {
   body: React.Node,
   progressBarHeight?: number,
+  footerState: 'cancel' | 'deploy',
 }
 
 class MainTemplate extends React.Component<Props> {
@@ -64,7 +65,7 @@ class MainTemplate extends React.Component<Props> {
       <Wrapper>
         <HeaderStyled />
         <Body progressBarHeight={this.props.progressBarHeight}>{this.props.body}</Body>
-        <FooterStyled />
+        <FooterStyled state={this.props.footerState} />
       </Wrapper>
     )
   }

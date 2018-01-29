@@ -42,6 +42,7 @@ class ConsolePage extends React.Component<Props, State> {
     return (
       <MainTemplate
         progressBarHeight={ProgressBarHeight}
+        footerState="cancel"
         body={(
           <Wrapper>
             <LinearProgressStyled

@@ -192,6 +192,7 @@ class HomePage extends React.Component<Props, State> {
   render() {
     return (
       <MainTemplate
+        footerState="deploy"
         body={(
           <Wrapper>
             <Panels>

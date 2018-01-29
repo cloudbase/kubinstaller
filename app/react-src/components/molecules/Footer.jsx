@@ -18,38 +18,35 @@ limitations under the License.
 
 import * as React from 'react'
 import styled from 'styled-components'
-import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
 import { Link } from 'react-router-dom'
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   min-width: 890px;
   background: #353746;
   padding: 22px 28px;
 `
-const RaisedButtons = styled.div``
-const FlatButtons = styled.div``
 
 type Props = {
   className?: string,
+  state: 'cancel' | 'deploy',
 }
 class Footer extends React.Component<Props> {
   render() {
     return (
       <Wrapper className={this.props.className}>
-        <FlatButtons>
+        {this.props.state === 'deploy' ? (
           <Link to="/console">
-            <FlatButton label="CLI" style={{ marginRight: '32px', color: 'white' }} />
+            <RaisedButton label="DEPLOY" primary style={{ width: '164px' }} />
           </Link>
+        ) : (
           <Link to="/">
-            <FlatButton label="DASHBOARD" style={{ color: 'white' }} />
+            <FlatButton label="Cancel" style={{ color: '#FFFFFF' }} />
           </Link>
-        </FlatButtons>
-        <RaisedButtons>
-          <RaisedButton label="DEPLOY" primary style={{ width: '164px' }} />
-        </RaisedButtons>
+        )}
       </Wrapper>
     )
   }
