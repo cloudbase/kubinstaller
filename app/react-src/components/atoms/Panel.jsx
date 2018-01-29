@@ -23,18 +23,25 @@ const Wrapper = styled.div`
   background: white;
   position: relative;
   padding-top: 24px;
+  height: calc(100% - 24px);
+  display: flex;
+  flex-direction: column;
 `
 const Title = styled.div`
   padding: 22px 20px;
   font-size: 20px;
 `
-const Body = styled.div``
+const Body = styled.div`
+  height: 100%;
+  overflow: auto;
+`
 
 type Props = {
   children: React.Node,
   title: string,
   className: string,
   panelBodyStyle?: any,
+  bodyRef?: (ref: HTMLElement) => void,
 }
 
 class Panel extends React.Component<Props> {
@@ -42,7 +49,7 @@ class Panel extends React.Component<Props> {
     return (
       <Wrapper className={this.props.className}>
         <Title>{this.props.title}</Title>
-        <Body style={this.props.panelBodyStyle}>{this.props.children}</Body>
+        <Body style={this.props.panelBodyStyle} innerRef={this.props.bodyRef}>{this.props.children}</Body>
       </Wrapper>
     )
   }

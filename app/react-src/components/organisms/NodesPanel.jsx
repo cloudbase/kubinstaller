@@ -72,14 +72,44 @@ type Props = {
   onDeleteSelection: () => void,
   onNodeMoreClick: (node: Node) => void,
 }
-
+type State = {
+  tableHeight: string,
+}
 
 const colStyles = [{ width: '20%' }, { width: '30%' }, { width: '20%' }, { width: '20%' }, { width: '32px' }]
 
-class NodesPanel extends React.Component<Props> {
+class NodesPanel extends React.Component<Props, State> {
+  state = {
+    tableHeight: '',
+  }
+
+  componentWillMount() {
+    this.updateTableHeight()
+    window.addEventListener('resize', this.handleResize.bind(this))
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize.bind(this))
+  }
+
+  bodyRef: HTMLElement
+
+  handleResize() {
+    this.updateTableHeight()
+  }
+
+  updateTableHeight() {
+    if (!this.bodyRef) {
+      setTimeout(() => { this.updateTableHeight() }, 0)
+      return
+    }
+
+    this.setState({ tableHeight: `${this.bodyRef.offsetHeight - 70}px` })
+  }
+
   render() {
     return (
-      <PanelStyled title="Nodes">
+      <PanelStyled title="Nodes" bodyRef={ref => { this.bodyRef = ref }}>
         {this.props.selectedNodes.length > 0 ? (
           <SelectionInfo>
             <SelectionInfoText>{this.props.selectedNodes.length} item{this.props.selectedNodes.length > 1 ? 's' : ''} selected</SelectionInfoText>
@@ -94,7 +124,7 @@ class NodesPanel extends React.Component<Props> {
           multiSelectable
           enableSelectAll
           onRowSelection={this.props.onNodeSelection}
-          height="455px"
+          height={this.state.tableHeight}
         >
           <TableHeader>
             <TableRow>

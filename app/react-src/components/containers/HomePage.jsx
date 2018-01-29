@@ -35,7 +35,7 @@ const Wrapper = styled.div``
 const Panels = styled.div`
   display: flex;
   margin-left: -24px;
-  min-height: 100%;
+  height: 100%;
   & > div {
     margin-left: 24px;
   }
