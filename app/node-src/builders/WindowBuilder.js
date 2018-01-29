@@ -36,6 +36,8 @@ export default class WindowBuilder extends EventEmitter {
         show: false,
         width: 1024,
         height: 728,
+        minWidth: 945,
+        minHeight: 580,
         backgroundColor: '#EEF0F3',
       })
 
