@@ -32,7 +32,7 @@ const Wrapper = styled.div`
   z-index: 1;
 `
 const Logo = styled.div`
-  ${StyleHelper.exactSize('77px')}
+  ${StyleHelper.exactSize('90px')}
   background: url('${logo}') center no-repeat;
 `
 const Text = styled.div`
