@@ -98,19 +98,14 @@ class NodeModal extends React.Component<Props, State> {
       hostErrorText = requiredMessage
     }
 
-    if (!this.state.node.credentials.username) {
+    if (!this.state.node.credentials.username && !this.state.node.sshKey) {
       valid = false
       usernameErrorText = requiredMessage
     }
 
-    if (!this.state.node.credentials.password) {
+    if (!this.state.node.credentials.password && !this.state.node.sshKey) {
       valid = false
       passwordErrorText = requiredMessage
-    }
-
-    if (!this.state.node.sshKey) {
-      valid = false
-      sshKeyErrorText = requiredMessage
     }
 
     this.setState({
@@ -187,6 +182,10 @@ class NodeModal extends React.Component<Props, State> {
       return null
     }
 
+    const credentialsDisabled = this.state.node.sshKey !== ''
+    const sshDisabled = this.state.node.credentials.username !== '' || this.state.node.credentials.password !== ''
+    const sshLabel = this.state.node.os === 'windows' ? 'Certificate' : 'SSH Public Key'
+
     return (
       <Wrapper>
         <TextField
@@ -217,12 +216,14 @@ class NodeModal extends React.Component<Props, State> {
         <Group flex>
           <TextField
             floatingLabelText="Username"
+            disabled={credentialsDisabled}
             errorText={this.state.usernameErrorText}
             value={this.state.node.credentials.username}
             onChange={(event) => { this.handleUsernameChange(event.target.value) }}
           />
           <TextField
             floatingLabelText="Password"
+            disabled={credentialsDisabled}
             type="password"
             errorText={this.state.passwordErrorText}
             value={this.state.node.credentials.password}
@@ -231,7 +232,8 @@ class NodeModal extends React.Component<Props, State> {
         </Group>
         <Group>
           <TextField
-            floatingLabelText="SSH Public Key"
+            floatingLabelText={sshLabel}
+            disabled={sshDisabled}
             fullWidth
             multiLine
             rows={2}
