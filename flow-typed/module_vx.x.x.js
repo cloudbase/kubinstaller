@@ -45,3 +45,7 @@ declare module 'material-ui/RadioButton' {
 declare module 'material-ui/CircularProgress' {
   declare module.exports: any;
 }
+
+declare module 'material-ui/LinearProgress' {
+  declare module.exports: any;
+}

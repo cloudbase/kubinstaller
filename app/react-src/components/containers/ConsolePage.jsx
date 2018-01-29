@@ -17,17 +17,41 @@ limitations under the License.
 // @flow
 
 import React from 'react'
+import styled from 'styled-components'
+import LinearProgress from 'material-ui/LinearProgress'
 
 import MainTemplate from './MainTemplate'
 import Console from '../organisms/Console'
 
+const ProgressBarHeight = 3
+const Wrapper = styled.div``
+const LinearProgressStyled = styled(LinearProgress)`
+  z-index: 1;
+`
 
 type Props = {}
-class ConsolePage extends React.Component<Props> {
+type State = {
+  progress: number,
+}
+class ConsolePage extends React.Component<Props, State> {
+  state = {
+    progress: 50,
+  }
+
   render() {
     return (
       <MainTemplate
-        body={<Console />}
+        progressBarHeight={ProgressBarHeight}
+        body={(
+          <Wrapper>
+            <LinearProgressStyled
+              style={{ height: ProgressBarHeight }}
+              mode="determinate"
+              value={this.state.progress}
+            />
+            <Console />
+          </Wrapper>
+        )}
       />
     )
   }

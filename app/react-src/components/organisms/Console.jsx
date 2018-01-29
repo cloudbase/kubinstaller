@@ -19,6 +19,8 @@ limitations under the License.
 import React from 'react'
 import styled from 'styled-components'
 
+import StyledString from '../../utils/StyledString'
+
 const Wrapper = styled.div`
   font-family: Courier;
   padding: 16px;
@@ -45,16 +47,8 @@ const Cursor = styled.div`
   margin: 16px 0;
   background: #6D6D6D;
 `
-class StyledText {
-  content: string
-  style: any
-  constructor(content: string, style?: string) {
-    this.content = content
-    this.style = style || ''
-  }
-}
 class ConsoleLine {
-  text: string | Array<StyledText | string>
+  text: string | StyledString
   username: string
   path: string
 }
@@ -70,21 +64,15 @@ line2.username = 'user@usersMacBookPro'
 line2.path = '~/Projects/second'
 line2.text = '2018-01-23 14:23:45.197 Electron[49929:1747795] *** WARNING: Textured window AtomNSWindow: is getting an implicitly transparent titlebar. This will break when linking against newer SDKs. Use NSWindow -titlebarAppearsTransparent=YES instead.'
 const line3 = new ConsoleLine()
-line3.text = [
-  '[53801:0123/145436.837886:',
-  new StyledText('ERROR:CONSOLE', 'color: red'),
-  '(852)] [object ErrorEvent], source: ',
-  new StyledText('chrome-devtools://devtools/bundled/inspector.js', 'font-style: italic; color: gray;'),
-  ' (852)',
-]
+const text = '[53801:0123/145436.837886:ERROR:CONSOLE(852)] [object ErrorEvent], source: chrome-devtools://devtools/bundled/inspector.js (852)'
+const styledString = new StyledString(text)
+styledString.range(25, 39, 'color: red')
+styledString.range(75, 122, 'font-style: italic; color: gray;')
+line3.text = styledString
 class Console extends React.Component<Props> {
-  renderText(text: string | Array<StyledText | string>) {
-    if (text instanceof Array) {
-      return text.map(t => {
-        const style = typeof t === 'string' ? '' : t.style
-        const content = typeof t === 'string' ? t : t.content
-        return <Text customStyle={style}>{content}</Text>
-      })
+  renderText(text: string | StyledString) {
+    if (typeof text !== 'string') {
+      return text.toHtml()
     }
     return text
   }
@@ -94,12 +82,12 @@ class Console extends React.Component<Props> {
 
     return (
       <Wrapper>
-        {lines.map(line => {
+        {lines.map((line, i) => {
           return (
-            <Line>
+            <Line key={i}>
               {line.username ? <Username>{line.username}:</Username> : null}
               {line.path ? <Path>{line.path}$</Path> : null}
-              <Text>{this.renderText(line.text)}</Text>
+              <Text dangerouslySetInnerHTML={{ __html: this.renderText(line.text) }} />
             </Line>
           )
         })}

@@ -31,6 +31,7 @@ const Body = styled.div`
   overflow-y: auto;
   flex-grow: 1;
   display: flex;
+  margin-top: -${props => props.progressBarHeight}px;
 `
 const HeaderStyled = styled(Header)`
   flex-shrink: 0;
@@ -41,9 +42,14 @@ const FooterStyled = styled(Footer)`
 
 type Props = {
   body: React.Node,
+  progressBarHeight?: number,
 }
 
 class MainTemplate extends React.Component<Props> {
+  static defaultProps = {
+    progressBarHeight: 0,
+  }
+
   componentWillMount() {
     if (!document.body) {
       return
@@ -57,7 +63,7 @@ class MainTemplate extends React.Component<Props> {
     return (
       <Wrapper>
         <HeaderStyled />
-        <Body>{this.props.body}</Body>
+        <Body progressBarHeight={this.props.progressBarHeight}>{this.props.body}</Body>
         <FooterStyled />
       </Wrapper>
     )
