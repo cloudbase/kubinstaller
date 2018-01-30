@@ -2,7 +2,7 @@
   "name": "kubinstaller",
   "productName": "kubinstaller",
   "author": "Cloudbase Solutions SRL",
-  "description": "",
+  "description": "Manage Kubernetes nodes",
   "version": "0.0.1",
   "main": "./main.prod.js",
   "homepage": "https://github.com/smiclea/kubinstaller",
