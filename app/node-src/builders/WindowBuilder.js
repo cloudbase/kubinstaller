@@ -67,6 +67,7 @@ export default class WindowBuilder extends EventEmitter {
         height: 300,
         transparent: true,
         center: true,
+        hasShadow: false,
         ...windowOptions,
       })
 
