@@ -21,10 +21,12 @@ import appPackage from '../../package.json'
 
 export default class MenuBuilder extends EventEmitter {
   buildMenu() {
+    if (process.platform !== 'darwin') {
+      return
+    }
+
     const menu = Menu.buildFromTemplate(this.buildDefaultTemplate())
     Menu.setApplicationMenu(menu)
-
-    return menu
   }
 
   buildDefaultTemplate() {
@@ -44,9 +46,6 @@ export default class MenuBuilder extends EventEmitter {
       label: 'View',
       submenu: [
         { role: 'togglefullscreen' },
-        { role: 'zoomin' },
-        { role: 'zoomout' },
-        { role: 'resetzoom' },
       ],
     }
     const subMenuViewDev = {
@@ -54,6 +53,9 @@ export default class MenuBuilder extends EventEmitter {
       submenu: [
         { role: 'reload' },
         { role: 'toggledevtools' },
+        { role: 'zoomin' },
+        { role: 'zoomout' },
+        { role: 'resetzoom' },
         { type: 'separator' },
         ...subMenuViewProd.submenu,
       ],
