@@ -46,10 +46,12 @@ export default class WindowBuilder extends EventEmitter {
         if (!this.mainWindow) {
           reject(new Error('"mainWindow" is not defined'))
         }
-        this.mainWindow.show()
-        this.mainWindow.focus()
-        this.emit('main-window-loaded')
-        resolve()
+        setTimeout(() => {
+          this.mainWindow.show()
+          this.mainWindow.focus()
+          this.emit('main-window-loaded')
+          resolve()
+        }, 1000)
       })
 
       this.mainWindow.on('closed', () => {
@@ -77,10 +79,12 @@ export default class WindowBuilder extends EventEmitter {
         if (!this.splashWindow) {
           reject(new Error('"splashWindow" is not defined'))
         }
-        this.splashWindow.show()
-        this.splashWindow.focus()
-        this.emit('splash-window-loaded')
-        resolve()
+        setTimeout(() => {
+          this.splashWindow.show()
+          this.splashWindow.focus()
+          this.emit('splash-window-loaded')
+          resolve()
+        }, 500)
       })
 
       this.splashWindow.on('closed', () => {

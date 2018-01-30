@@ -48,7 +48,7 @@ const buildWindows = () => {
       windowBuilder.buildMainWindow().then(() => {
         windowBuilder.destroySplashWindow()
       })
-    }, 3000)
+    }, 2000)
   })
 }
 
