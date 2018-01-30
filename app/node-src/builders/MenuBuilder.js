@@ -33,9 +33,6 @@ export default class MenuBuilder extends EventEmitter {
       submenu: [
         { label: `About ${appPackage.productName}`, click: () => { this.emit('item-click', 'about') } },
         { type: 'separator' },
-        { role: 'hide' },
-        { role: 'hideothers' },
-        { type: 'separator' },
         { role: 'quit' },
       ],
     }
