@@ -61,7 +61,7 @@ menuBuilder.on('item-click', (item: string) => {
     windowBuilder.buildSplashWindow({
       parent: windowBuilder.mainWindow,
       modal: true,
-      height: 500,
+      height: 495,
     })
   }
 })

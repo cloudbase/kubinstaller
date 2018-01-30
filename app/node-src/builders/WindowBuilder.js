@@ -62,9 +62,9 @@ export default class WindowBuilder extends EventEmitter {
     return new Promise((resolve, reject) => {
       this.splashWindow = new BrowserWindow({
         show: false,
-        width: 524,
-        height: 400,
         frame: false,
+        width: 400,
+        height: 300,
         transparent: true,
         center: true,
         ...windowOptions,

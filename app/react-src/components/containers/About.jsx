@@ -28,15 +28,14 @@ import ExternalLink from '../atoms/ExternalLink'
 import theme from '../../utils/MuiTheme'
 
 const Wrapper = styled.div`
+  position: absolute;
+  top: 55px;
   width: 377px;
-  height: ${props => props.isSplash ? '230px' : '396px'};
   background: #FAFAFA;
   border-radius: 2px;
-  margin: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 75px;
 `
 const Logo = styled.div`
   width: 140px;
