@@ -10,4 +10,5 @@ To start a production build use `yarn start`.
 
 ## Packaging
 
-To package on the local platform use `yarn package`.
+To create an installation package for the local platform use `yarn package`.
+The package will be available in the 'release' folder.
