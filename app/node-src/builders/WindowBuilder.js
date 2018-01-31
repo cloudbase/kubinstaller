@@ -19,6 +19,8 @@ limitations under the License.
 import { BrowserWindow, BrowserWindowConstructorOptions } from 'electron'
 import EventEmitter from 'events'
 
+const WindowShowDelay = 500
+
 export default class WindowBuilder extends EventEmitter {
   mainWindow: BrowserWindow
   splashWindow: BrowserWindow
@@ -30,39 +32,48 @@ export default class WindowBuilder extends EventEmitter {
     this.appUrl = appUrl
   }
 
+  buildWindow(windowOptions: BrowserWindowConstructorOptions, url: string): Promise<BrowserWindow> {
+    return new Promise((resolve, reject) => {
+      const window = new BrowserWindow(windowOptions)
+
+      window.loadURL(url)
+
+      window.once('ready-to-show', () => {
+        if (!window) {
+          reject(new Error('window could not be built'))
+        }
+        setTimeout(() => {
+          window.show()
+          window.focus()
+          resolve(window)
+        }, WindowShowDelay)
+      })
+    })
+  }
+
   buildMainWindow(): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.mainWindow = new BrowserWindow({
+      this.buildWindow({
         show: false,
         width: 1024,
         height: 728,
         minWidth: 945,
         minHeight: 580,
         backgroundColor: '#EEF0F3',
-      })
-
-      this.mainWindow.loadURL(this.appUrl)
-      this.mainWindow.once('ready-to-show', () => {
-        if (!this.mainWindow) {
-          reject(new Error('"mainWindow" is not defined'))
-        }
-        setTimeout(() => {
-          this.mainWindow.show()
-          this.mainWindow.focus()
-          this.emit('main-window-loaded')
-          resolve()
-        }, 1000)
-      })
-
-      this.mainWindow.on('closed', () => {
-        this.mainWindow = null
-      })
+      }, this.appUrl).then(window => {
+        this.mainWindow = window
+        this.emit('main-window-loaded')
+        this.mainWindow.on('closed', () => {
+          this.mainWindow = null
+        })
+        resolve()
+      }, reject)
     })
   }
 
   buildSplashWindow(windowOptions?: BrowserWindowConstructorOptions, isSplash: boolean = false): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.splashWindow = new BrowserWindow({
+      this.buildWindow({
         show: false,
         frame: false,
         width: 400,
@@ -71,25 +82,14 @@ export default class WindowBuilder extends EventEmitter {
         center: true,
         hasShadow: false,
         ...windowOptions,
-      })
-
-      this.splashWindow.loadURL(`${this.appUrl}#/about${isSplash ? '?isSplash=true' : ''}`)
-
-      this.splashWindow.once('ready-to-show', () => {
-        if (!this.splashWindow) {
-          reject(new Error('"splashWindow" is not defined'))
-        }
-        setTimeout(() => {
-          this.splashWindow.show()
-          this.splashWindow.focus()
-          this.emit('splash-window-loaded')
-          resolve()
-        }, 500)
-      })
-
-      this.splashWindow.on('closed', () => {
-        this.splashWindow = null
-      })
+      }, `${this.appUrl}#/about${isSplash ? '?isSplash=true' : ''}`).then(window => {
+        this.splashWindow = window
+        this.splashWindow.on('closed', () => {
+          this.splashWindow = null
+        })
+        this.emit('splash-window-loaded')
+        resolve()
+      }, reject)
     })
   }
 
