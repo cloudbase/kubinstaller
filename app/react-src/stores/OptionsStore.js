@@ -16,22 +16,21 @@ limitations under the License.
 
 // @flow
 
-import alt from '../alt'
+import { observable, action, toJS } from 'mobx'
 
-import OptionsActions from '../actions/OptionsActions'
 import NetworkDriver from '../models/NetworkDriver'
+import PersistenceManager from '../ipc/PersistenceManager'
 
 class OptionsStore {
-  networkDrivers: Array<NetworkDriver>
-  selectedNetworkDriver: string
-  clusterNetworkStartIp: string
-  clusterNetworkEndIp: string
-  serviceNetworkStartIp: string
-  serviceNetworkEndIp: string
-  ingressToggled: boolean
-  helmToggled: boolean
-  registryToggled: boolean
-  bindActions: (actions: OptionsActions) => void
+  @observable networkDrivers: Array<NetworkDriver> = []
+  @observable selectedNetworkDriver: string = ''
+  @observable clusterNetworkStartIp: string = ''
+  @observable clusterNetworkEndIp: string = ''
+  @observable serviceNetworkStartIp: string = ''
+  @observable serviceNetworkEndIp: string = ''
+  @observable ingressToggled: boolean = false
+  @observable helmToggled: boolean = false
+  @observable registryToggled: boolean = false
 
   constructor() {
     const networkDriverMockup1 = new NetworkDriver()
@@ -40,60 +39,67 @@ class OptionsStore {
     networkDriverMockup2.name = 'Others'
     this.networkDrivers = [networkDriverMockup1, networkDriverMockup2]
     this.selectedNetworkDriver = this.networkDrivers[0].name
-    this.clusterNetworkStartIp = ''
-    this.clusterNetworkEndIp = ''
-    this.serviceNetworkStartIp = ''
-    this.serviceNetworkEndIp = ''
-    this.ingressToggled = false
-    this.helmToggled = false
-    this.registryToggled = false
-
-    this.bindActions(OptionsActions)
   }
 
-  onUpdateSelectedNetworkDriver(arg: { value: string, }) {
-    this.selectedNetworkDriver = arg.value
+  @action updateSelectedNetworkDriver(value: string) {
+    this.selectedNetworkDriver = value
   }
 
-  onUpdateClusterNetworkStartIp(arg: { value: string, }) {
-    this.clusterNetworkStartIp = arg.value
+  @action updateClusterNetworkStartIp(value: string) {
+    this.clusterNetworkStartIp = value
   }
 
-  onUpdateClusterNetworkEndIp(arg: { value: string, }) {
-    this.clusterNetworkEndIp = arg.value
+  @action updateClusterNetworkEndIp(value: string) {
+    this.clusterNetworkEndIp = value
   }
 
-  onUpdateServiceNetworkStartIp(arg: { value: string, }) {
-    this.serviceNetworkStartIp = arg.value
+  @action updateServiceNetworkStartIp(value: string) {
+    this.serviceNetworkStartIp = value
   }
 
-  onUpdateServiceNetworkEndIp(arg: { value: string, }) {
-    this.serviceNetworkEndIp = arg.value
+  @action updateServiceNetworkEndIp(value: string) {
+    this.serviceNetworkEndIp = value
   }
 
-  onUpdateIngressToggle(arg: { value: boolean, }) {
-    this.ingressToggled = arg.value
+  @action updateIngressToggle(value: boolean) {
+    this.ingressToggled = value
   }
 
-  onUpdateHelmToggle(arg: { value: boolean, }) {
-    this.helmToggled = arg.value
+  @action updateHelmToggle(value: boolean) {
+    this.helmToggled = value
   }
 
-  onUpdateRegistryToggle(arg: { value: boolean, }) {
-    this.registryToggled = arg.value
+  @action updateRegistryToggle(value: boolean) {
+    this.registryToggled = value
   }
 
-  onLoadFulfilled(data: OptionsStore) {
-    this.networkDrivers = data.networkDrivers
-    this.selectedNetworkDriver = data.selectedNetworkDriver
-    this.clusterNetworkStartIp = data.clusterNetworkStartIp
-    this.clusterNetworkEndIp = data.clusterNetworkEndIp
-    this.serviceNetworkStartIp = data.serviceNetworkStartIp
-    this.serviceNetworkEndIp = data.serviceNetworkEndIp
-    this.ingressToggled = data.ingressToggled
-    this.helmToggled = data.helmToggled
-    this.registryToggled = data.registryToggled
+  @action save() {
+    return PersistenceManager.save('options', {
+      networkDrivers: toJS(this.networkDrivers),
+      selectedNetworkDriver: toJS(this.selectedNetworkDriver),
+      clusterNetworkStartIp: toJS(this.clusterNetworkStartIp),
+      clusterNetworkEndIp: toJS(this.clusterNetworkEndIp),
+      serviceNetworkStartIp: toJS(this.serviceNetworkStartIp),
+      serviceNetworkEndIp: toJS(this.serviceNetworkEndIp),
+      ingressToggled: toJS(this.ingressToggled),
+      helmToggled: toJS(this.helmToggled),
+      registryToggled: toJS(this.registryToggled),
+    })
+  }
+
+  @action load() {
+    return PersistenceManager.load('options').then((data: OptionsStore) => {
+      this.networkDrivers = data.networkDrivers
+      this.selectedNetworkDriver = data.selectedNetworkDriver
+      this.clusterNetworkStartIp = data.clusterNetworkStartIp
+      this.clusterNetworkEndIp = data.clusterNetworkEndIp
+      this.serviceNetworkStartIp = data.serviceNetworkStartIp
+      this.serviceNetworkEndIp = data.serviceNetworkEndIp
+      this.ingressToggled = data.ingressToggled
+      this.helmToggled = data.helmToggled
+      this.registryToggled = data.registryToggled
+    })
   }
 }
 
-export default alt.createStore(OptionsStore)
+export default new OptionsStore()

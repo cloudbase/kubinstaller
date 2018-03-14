@@ -8,6 +8,7 @@
     "react"
   ],
   "plugins": [
+    "transform-decorators-legacy",
     "add-module-exports", 
     "dynamic-import-webpack", 
     "babel-plugin-styled-components",

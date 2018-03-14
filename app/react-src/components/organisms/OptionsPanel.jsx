@@ -17,6 +17,7 @@ limitations under the License.
 // @flow
 
 import React from 'react'
+import { observer } from 'mobx-react'
 import styled from 'styled-components'
 import MenuItem from 'material-ui/MenuItem'
 import DropDownMenu from 'material-ui/DropDownMenu'
@@ -66,7 +67,7 @@ const Option = styled.div`
 type Props = {
   networkDrivers: Array<NetworkDriver>,
   selectedNetworkDriver: string,
-  onNetworkDriverChange: (_: NetworkDriver) => void,
+  onNetworkDriverChange: (_: string) => void,
   clusterNetworkStartIp: string,
   clusterNetworkEndIp: string,
   onClusterNetworkStartIpChange: (_: string) => void,
@@ -82,7 +83,7 @@ type Props = {
   registryToggled: boolean,
   onRegistryToggle: (_: boolean) => void,
 }
-
+@observer
 class OptionsPanel extends React.Component<Props> {
   render() {
     return (
@@ -94,7 +95,7 @@ class OptionsPanel extends React.Component<Props> {
             <DropDownMenu
               style={{ marginLeft: '-24px' }}
               value={this.props.selectedNetworkDriver}
-              onChange={(e, i, value: NetworkDriver) => { this.props.onNetworkDriverChange(value) }}
+              onChange={(e, i, value: string) => { this.props.onNetworkDriverChange(value) }}
             >
               {this.props.networkDrivers.map(driver => (
                 <MenuItem key={driver.name} value={driver.name} primaryText={driver.name} />

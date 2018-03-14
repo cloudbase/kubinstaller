@@ -17,6 +17,7 @@ limitations under the License.
 // @flow
 
 import * as React from 'react'
+import { observer } from 'mobx-react'
 import styled from 'styled-components'
 import {
   Table,
@@ -65,7 +66,7 @@ const MoreVertStyled = styled(MoreVert)`
 type Props = {
   nodes: Array<Node>,
   selectedNodes: Array<number>,
-  onNodeSelection: () => void,
+  onNodeSelection: (selection: string | number[]) => void,
   onNodeIsMasterToggle: (node: Node, toggled: boolean) => void,
   onNodeIsNodeToggle: (node: Node, toggled: boolean) => void,
   onNewNodeClick: () => void,
@@ -77,7 +78,7 @@ type State = {
 }
 
 const colStyles = [{ width: '20%' }, { width: '30%' }, { width: '20%' }, { width: '20%' }, { width: '32px' }]
-
+@observer
 class NodesPanel extends React.Component<Props, State> {
   state = {
     tableHeight: '',

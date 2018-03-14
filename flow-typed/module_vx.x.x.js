@@ -2,6 +2,10 @@ declare module 'module' {
   declare module.exports: any;
 }
 
+declare module 'mobx' {
+  declare module.exports: any;
+}
+
 declare module 'material-ui/Table' {
   declare module.exports: any;
 }

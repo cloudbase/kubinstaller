@@ -16,45 +16,25 @@ limitations under the License.
 
 // @flow
 
-import alt from '../alt'
-import CrendetialsActions from '../actions/CrendetialsActions'
+import { observable, action } from 'mobx'
+
 import Credentials from '../models/Credentials'
+import CrendetialsManager from '../ipc/CrendetialsManager'
 
 class CredentialsStore {
-  credentials: Credentials[]
-  bindActions: (actions: CrendetialsActions) => void
+  @observable credentials: Credentials[] = []
 
-  constructor() {
-    this.credentials = []
-
-    this.bindActions(CrendetialsActions)
+  @action setPassword(username: string, password: string) {
+    return CrendetialsManager.set(username, password).then(() => {
+      this.credentials = [...this.credentials, new Credentials(username, password)]
+    })
   }
 
-  onSetPassword() {
-    console.log('Setting the password ...') // eslint-disable-line no-console
-  }
-
-  onSetPasswordFulfilled(credentials: Credentials) {
-    this.credentials = [...this.credentials, credentials]
-    console.log('Password set successfully!') // eslint-disable-line no-console
-  }
-
-  onSetPasswordRejected() {
-    console.log('Password couldn\'t be set!') // eslint-disable-line no-console
-  }
-
-  onGetPassword() {
-    console.log('Getting the password ...') // eslint-disable-line no-console
-  }
-
-  onGetPasswordFulfilled(credentials: Credentials) {
-    this.credentials = [...this.credentials, credentials]
-    console.log('Password retrieved successfully!') // eslint-disable-line no-console
-  }
-
-  onGetPasswordRejected() {
-    console.log('Password couldn\'t be retrieved!') // eslint-disable-line no-console
+  @action getPassword(username: string) {
+    return CrendetialsManager.get(username).then((credentials: Credentials) => {
+      this.credentials = [...this.credentials, new Credentials(username, credentials.password)]
+    })
   }
 }
 
-export default alt.createStore(CredentialsStore)
+export default new CredentialsStore()

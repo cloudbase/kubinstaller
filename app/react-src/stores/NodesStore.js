@@ -16,70 +16,73 @@ limitations under the License.
 
 // @flow
 
-import alt from '../alt'
-import NodesActions from '../actions/NodesActions'
+import { observable, action, toJS } from 'mobx'
+
 import Node from '../models/Node'
+import PersistenceManager from '../ipc/PersistenceManager'
 
 class NodesStore {
-  nodes: Node[]
-  selectedNodes: number[]
-  validating: boolean
-  bindActions: (actions: NodesActions) => void
+  @observable nodes: Node[] = []
+  @observable selectedNodes: number[] = []
+  @observable validating: boolean = false
 
-  constructor() {
-    this.nodes = []
-    this.selectedNodes = []
-    this.validating = false
-
-    this.bindActions(NodesActions)
-  }
-
-  onUpdateSelection(options: { value: Array<number> | string, }) {
-    if (options.value === 'all') {
+  @action updateSelection(value: string | number[]) {
+    if (value === 'all') {
       this.selectedNodes = this.nodes.map((n, i) => i)
-    } else if (options.value === 'none') {
+    } else if (value === 'none') {
       this.selectedNodes = []
-    } else if (options.value instanceof Array) {
-      this.selectedNodes = [...options.value]
+    } else if (value instanceof Array) {
+      this.selectedNodes = [...value]
     }
   }
 
-  onAdd(options: { node: Node, }) {
-    this.nodes = [...this.nodes, options.node]
+  @action add(node: Node) {
+    this.nodes = [...this.nodes, node]
     this.selectedNodes = []
   }
 
-  onUpdate(options: { node: Node, }) {
+  @action update(nodeData: Node) {
     this.nodes = this.nodes.map(node => {
-      if (node.id === options.node.id) {
-        return new Node(options.node)
+      if (nodeData.id === node.id) {
+        return nodeData
       }
-      return new Node(node)
+      return node
     })
     this.selectedNodes = []
   }
 
-  onLoadFulfilled(data: NodesStore) {
-    this.nodes = data.nodes
-    this.selectedNodes = data.selectedNodes
+  @action save() {
+    return PersistenceManager.save('nodes', {
+      nodes: toJS(this.nodes),
+      selectedNodes: toJS(this.selectedNodes),
+    })
   }
 
-  onDeleteSelection() {
+  @action load() {
+    return PersistenceManager.load('nodes').then((data: { nodes: Node[], selectedNodes: number[] }) => {
+      this.nodes = data.nodes
+      this.selectedNodes = data.selectedNodes
+    })
+  }
+
+  @action deleteSelection() {
     this.nodes = this.nodes.filter((_, i: number) => this.selectedNodes.indexOf(i) === -1)
     this.selectedNodes = []
   }
 
-  onValidate() {
+  @action validate(node: Node) {
     this.validating = true
-  }
 
-  onValidateFulfilled() {
-    this.validating = false
-  }
-
-  onValidateRejected() {
-    this.validating = false
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(node)
+      }, 3000)
+    }).then(() => {
+      this.validating = false
+    }).catch(() => {
+      this.validating = false
+    })
   }
 }
 
-export default alt.createStore(NodesStore)
+export default new NodesStore()

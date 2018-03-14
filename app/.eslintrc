@@ -2,7 +2,7 @@
   "rules": {
     "flowtype/boolean-style": ["error", "boolean"],
     "flowtype/define-flow-type": "warn",
-    "flowtype/delimiter-dangle": ["error", "always"],
+    "flowtype/delimiter-dangle": ["error", "only-multiline"],
     "flowtype/generic-spacing": ["error", "never"],
     "flowtype/no-primitive-constructor-types": "error",
     "flowtype/object-type-delimiter": ["error", "comma"],
