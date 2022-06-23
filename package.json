@@ -147,7 +147,7 @@
     "flow-typed": "^2.2.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^22.0.4",
-    "jsdom": "^11.5.1",
+    "jsdom": "^16.5.0",
     "minimist": "^1.2.3",
     "node-sass": "^4.13.1",
     "npm-logical-tree": "^1.2.0",
